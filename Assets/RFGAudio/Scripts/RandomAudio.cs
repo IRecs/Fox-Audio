@@ -36,6 +36,7 @@ namespace RFG.Audio
         PlayRandom();
         return;
       }
+      _lastIndex = randomIndex;
       AudioData audioData = RandomAudioData.AudioList[randomIndex];
       audioData.GenerateAudioSource(gameObject);
       transform.position = GetRandomScreenPoint();

@@ -45,5 +45,17 @@ namespace RFG.Audio
     {
       _audioSource.Pause();
     }
+
+    public void Persist(bool persist)
+    {
+      if (persist)
+      {
+        DontDestroyOnLoad(gameObject);
+      }
+      else
+      {
+        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
-# unity-audio
+# RFG Audio
 
-Unity Audio is a project that provides components in Unity with these features:
+RFG Audio is a project that provides components in Unity:
 
 - Reusable Audio Sources
 - UI Elements Audio Controls

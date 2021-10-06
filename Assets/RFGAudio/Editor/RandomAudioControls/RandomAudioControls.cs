@@ -41,7 +41,7 @@ namespace RFG.Audio
       Button generateAudioSourceButton = rootElement.Q<Button>("generate-audio-source");
       generateAudioSourceButton.clicked += () =>
       {
-        RandomAudioTarget.RandomAudioData.AudioList[0].GenerateAudioSource(RandomAudioTarget.gameObject);
+        RandomAudioTarget.GenerateAudioSource();
       };
 
       Button playButton = rootElement.Q<Button>("play");

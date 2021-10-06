@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca30d021836f5454daedb7309d75db50, type: 3}
   m_Name: SoundTrack
   m_EditorClassIdentifier: 
-  AudioList:
+  audioList:
   - {fileID: 11400000, guid: 31bc8bad5ea3578489548a827a77118f, type: 2}
   - {fileID: 11400000, guid: 623ea7fc9f475a64ead5b81c20129e27, type: 2}
-  Loop: 1
-  WaitForSeconds: 1
-  FadeTime: 1
-  CurrentIndex: 0
-  PlayOnStart: 1
+  loop: 1
+  waitForSeconds: 1
+  fadeTime: 1
+  currentIndex: 0
+  playOnAwake: 1

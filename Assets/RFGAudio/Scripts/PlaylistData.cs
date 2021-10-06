@@ -6,51 +6,51 @@ namespace RFG.Audio
   [CreateAssetMenu(fileName = "New Playlist Data", menuName = "RFG/Audio/Playlist Data")]
   public class PlaylistData : ScriptableObject
   {
-    public List<AudioData> AudioList;
-    public bool Loop = false;
-    public float WaitForSeconds = 1f;
-    public float FadeTime = 1f;
-    public int CurrentIndex = 0;
-    public bool PlayOnStart = false;
+    public List<AudioData> audioList;
+    public bool loop = false;
+    public float waitForSeconds = 1f;
+    public float fadeTime = 1f;
+    public int currentIndex = 0;
+    public bool playOnAwake = false;
 
     public void Initialize()
     {
-      CurrentIndex = 0;
+      currentIndex = 0;
     }
 
     public AudioData GetCurrent()
     {
-      return AudioList[CurrentIndex];
+      return audioList[currentIndex];
     }
 
     public bool IsLast()
     {
-      return CurrentIndex == AudioList.Count - 1;
+      return currentIndex == audioList.Count - 1;
     }
 
     public bool IsFirst()
     {
-      return CurrentIndex == 0;
+      return currentIndex == 0;
     }
 
     public void Next()
     {
-      int nextIndex = CurrentIndex + 1;
-      if (nextIndex > AudioList.Count - 1)
+      int nextIndex = currentIndex + 1;
+      if (nextIndex > audioList.Count - 1)
       {
         nextIndex = 0;
       }
-      CurrentIndex = nextIndex;
+      currentIndex = nextIndex;
     }
 
     public void Previous()
     {
-      int nextIndex = CurrentIndex - 1;
+      int nextIndex = currentIndex - 1;
       if (nextIndex < 0)
       {
-        nextIndex = AudioList.Count - 1;
+        nextIndex = audioList.Count - 1;
       }
-      CurrentIndex = nextIndex;
+      currentIndex = nextIndex;
     }
   }
 }

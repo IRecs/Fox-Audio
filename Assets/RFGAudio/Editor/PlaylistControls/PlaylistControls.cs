@@ -41,7 +41,7 @@ namespace RFG.Audio
       Button generateAudioSourceButton = rootElement.Q<Button>("generate-audio-source");
       generateAudioSourceButton.clicked += () =>
       {
-        playlistTarget.PlaylistData.AudioList[0].GenerateAudioSource(playlistTarget.gameObject);
+        playlistTarget.GenerateAudioSource();
       };
 
       Button previousButton = rootElement.Q<Button>("previous");

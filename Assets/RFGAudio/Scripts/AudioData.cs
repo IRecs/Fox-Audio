@@ -6,32 +6,32 @@ namespace RFG.Audio
   [CreateAssetMenu(fileName = "New Audio Data", menuName = "RFG/Audio/Audio Data")]
   public class AudioData : ScriptableObject
   {
-    public AudioClip Clip;
-    public AudioMixerGroup Output;
+    public AudioClip clip;
+    public AudioMixerGroup outputAudioMixerGroup;
 
     [Range(0, 1)]
-    public float Volume = 1f;
+    public float volume = 1f;
 
     [Range(.25f, 3f)]
-    public float Pitch = 1f;
+    public float pitch = 1f;
 
-    public bool RandomPitch = false;
-
-    [Range(0f, 1f)]
-    public float MinPitch;
-    [Range(0f, 1f)]
-    public float MaxPitch;
-
-
-    public bool PlayOnAwake = false;
-    public bool Loop = false;
-    public float FadeTime = 0f;
+    public bool randomPitch = false;
 
     [Range(0f, 1f)]
-    public float SpacialBlend = 1f;
-    public float MinDistance = 1f;
-    public float MaxDistance = 100f;
-    public AudioRolloffMode RolloffMode;
+    public float minPitch;
+    [Range(0f, 1f)]
+    public float maxPitch;
+
+
+    public bool playOnAwake = false;
+    public bool loop = false;
+    public float fadeTime = 0f;
+
+    [Range(0f, 1f)]
+    public float spacialBlend = 1f;
+    public float minDistance = 1f;
+    public float maxDistance = 100f;
+    public AudioRolloffMode rolloffMode;
 
   }
 }

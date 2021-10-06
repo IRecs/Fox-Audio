@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Playlist")]
-  public class Playlist : MonoBehaviour
+  public class Playlist : MonoBehaviour, IAudio
   {
     [field: SerializeField] public PlaylistData PlaylistData { get; set; }
 
@@ -19,11 +19,7 @@ namespace RFG.Audio
     {
       _audioSource = GetComponent<AudioSource>();
       PlaylistData.Initialize();
-    }
-
-    private void Start()
-    {
-      if (PlaylistData.PlayOnStart)
+      if (PlaylistData.playOnAwake)
       {
         Play();
       }
@@ -31,7 +27,7 @@ namespace RFG.Audio
 
     public void Play()
     {
-      if (PlaylistData.AudioList.Count == 0)
+      if (PlaylistData.audioList.Count == 0)
         return;
 
       _playingCoroutine = PlayCo();
@@ -49,7 +45,7 @@ namespace RFG.Audio
       {
         if (Application.isFocused && !_audioSource.isPlaying && !_isPaused)
         {
-          if (PlaylistData.IsLast() && !PlaylistData.Loop)
+          if (PlaylistData.IsLast() && !PlaylistData.loop)
           {
             _isPlaying = false;
             StopCoroutine(_playingCoroutine);
@@ -70,8 +66,8 @@ namespace RFG.Audio
     {
       AudioData audioData = PlaylistData.GetCurrent();
       audioData.GenerateAudioSource(gameObject);
-      yield return new WaitForSecondsRealtime(PlaylistData.WaitForSeconds);
-      yield return _audioSource.FadeIn(PlaylistData.FadeTime);
+      yield return new WaitForSecondsRealtime(PlaylistData.waitForSeconds);
+      yield return _audioSource.FadeIn(PlaylistData.fadeTime);
     }
 
     public void TogglePause()
@@ -97,7 +93,7 @@ namespace RFG.Audio
     {
       StopCoroutine(_playingCoroutine);
       _isPlaying = false;
-      yield return _audioSource.FadeOut(PlaylistData.FadeTime);
+      yield return _audioSource.FadeOut(PlaylistData.fadeTime);
       yield return null;
     }
 
@@ -135,6 +131,11 @@ namespace RFG.Audio
       {
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
       }
+    }
+
+    public void GenerateAudioSource()
+    {
+      PlaylistData.audioList[0].GenerateAudioSource(gameObject);
     }
   }
 }

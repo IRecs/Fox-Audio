@@ -3,7 +3,7 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Audio")]
-  public class Audio : MonoBehaviour
+  public class Audio : MonoBehaviour, IAudio
   {
     [field: SerializeField] public AudioData AudioData { get; set; }
     private AudioSource _audioSource;
@@ -15,13 +15,13 @@ namespace RFG.Audio
 
     public void Play()
     {
-      if (AudioData.RandomPitch)
+      if (AudioData.randomPitch)
       {
-        _audioSource.pitch = UnityEngine.Random.Range(AudioData.MinPitch, AudioData.MaxPitch);
+        _audioSource.pitch = UnityEngine.Random.Range(AudioData.minPitch, AudioData.maxPitch);
       }
-      if (AudioData.FadeTime != 0f)
+      if (AudioData.fadeTime != 0f)
       {
-        StartCoroutine(_audioSource.FadeIn(AudioData.FadeTime));
+        StartCoroutine(_audioSource.FadeIn(AudioData.fadeTime));
       }
       else
       {
@@ -31,9 +31,9 @@ namespace RFG.Audio
 
     public void Stop()
     {
-      if (AudioData.FadeTime != 0f)
+      if (AudioData.fadeTime != 0f)
       {
-        StartCoroutine(_audioSource.FadeOut(AudioData.FadeTime));
+        StartCoroutine(_audioSource.FadeOut(AudioData.fadeTime));
       }
       else
       {
@@ -56,6 +56,11 @@ namespace RFG.Audio
       {
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
       }
+    }
+
+    public void GenerateAudioSource()
+    {
+      AudioData.GenerateAudioSource(gameObject);
     }
   }
 }

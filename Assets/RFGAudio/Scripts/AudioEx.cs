@@ -15,16 +15,16 @@ namespace RFG.Audio
       }
 
       source.tag = "Audio";
-      source.clip = audioData.Clip;
-      source.outputAudioMixerGroup = audioData.Output;
-      source.playOnAwake = audioData.PlayOnAwake;
-      source.loop = audioData.Loop;
-      source.volume = audioData.Volume;
-      source.spatialBlend = audioData.SpacialBlend;
-      source.pitch = audioData.Pitch;
-      source.minDistance = audioData.MinDistance;
-      source.maxDistance = audioData.MaxDistance;
-      source.rolloffMode = audioData.RolloffMode;
+      source.clip = audioData.clip;
+      source.outputAudioMixerGroup = audioData.outputAudioMixerGroup;
+      source.playOnAwake = audioData.playOnAwake;
+      source.loop = audioData.loop;
+      source.volume = audioData.volume;
+      source.spatialBlend = audioData.spacialBlend;
+      source.pitch = audioData.pitch;
+      source.minDistance = audioData.minDistance;
+      source.maxDistance = audioData.maxDistance;
+      source.rolloffMode = audioData.rolloffMode;
     }
 
     public static IEnumerator FadeIn(this AudioSource audioSource, float duration)

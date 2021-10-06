@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61807c3d8563ee4499534256306a9d0, type: 3}
   m_Name: Darkness
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: 0a5f5612ce424c74fa59e697fae471e6, type: 3}
-  Output: {fileID: 24300002, guid: 8f08a474525bc1746b83991ba70bd4eb, type: 2}
-  Volume: 1
-  Pitch: 1
-  RandomPitch: 0
-  MinPitch: 0
-  MaxPitch: 0
-  PlayOnAwake: 0
-  Loop: 0
-  FadeTime: 1
-  SpacialBlend: 1
-  MinDistance: 1
-  MaxDistance: 100
-  RolloffMode: 0
+  clip: {fileID: 8300000, guid: 0a5f5612ce424c74fa59e697fae471e6, type: 3}
+  outputAudioMixerGroup: {fileID: 24300002, guid: 8f08a474525bc1746b83991ba70bd4eb, type: 2}
+  volume: 1
+  pitch: 1
+  randomPitch: 0
+  minPitch: 0
+  maxPitch: 0
+  playOnAwake: 0
+  loop: 0
+  fadeTime: 0
+  spacialBlend: 1
+  minDistance: 1
+  maxDistance: 100
+  rolloffMode: 0

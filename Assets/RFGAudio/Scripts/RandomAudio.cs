@@ -3,7 +3,7 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Random Audio")]
-  public class RandomAudio : MonoBehaviour
+  public class RandomAudio : MonoBehaviour, IAudio
   {
     public RandomAudioData RandomAudioData;
 
@@ -27,7 +27,7 @@ namespace RFG.Audio
         return;
       }
       _waitDuration += Time.deltaTime;
-      if (_waitDuration > RandomAudioData.WaitForSeconds)
+      if (_waitDuration > RandomAudioData.waitForSeconds)
       {
         PlayRandom();
       }
@@ -36,19 +36,19 @@ namespace RFG.Audio
     public void PlayRandom()
     {
       _waitDuration = 0f;
-      int randomIndex = UnityEngine.Random.Range(0, RandomAudioData.AudioList.Count - 1);
+      int randomIndex = UnityEngine.Random.Range(0, RandomAudioData.audioList.Count - 1);
       if (randomIndex == _lastIndex)
       {
         PlayRandom();
         return;
       }
       _lastIndex = randomIndex;
-      _currentAudioData = RandomAudioData.AudioList[randomIndex];
+      _currentAudioData = RandomAudioData.audioList[randomIndex];
       _currentAudioData.GenerateAudioSource(gameObject);
       transform.position = GetRandomScreenPoint();
-      if (_currentAudioData.FadeTime != 0)
+      if (_currentAudioData.fadeTime != 0)
       {
-        StartCoroutine(_audioSource.FadeIn(_currentAudioData.FadeTime));
+        StartCoroutine(_audioSource.FadeIn(_currentAudioData.fadeTime));
       }
       else
       {
@@ -63,10 +63,10 @@ namespace RFG.Audio
         UnityEngine.Random.Range(0, Screen.height),
         0
       );
-      return _mainCamera.ScreenToWorldPoint(point * RandomAudioData.Offset);
+      return _mainCamera.ScreenToWorldPoint(point * RandomAudioData.offset);
     }
 
-    public void Start()
+    public void Play()
     {
       _isPlaying = true;
     }
@@ -74,14 +74,19 @@ namespace RFG.Audio
     public void Stop()
     {
       _isPlaying = false;
-      if (_currentAudioData.FadeTime != 0)
+      if (_currentAudioData.fadeTime != 0)
       {
-        StartCoroutine(_audioSource.FadeOut(_currentAudioData.FadeTime));
+        StartCoroutine(_audioSource.FadeOut(_currentAudioData.fadeTime));
       }
       else
       {
         _audioSource.Stop();
       }
+    }
+
+    public void GenerateAudioSource()
+    {
+      RandomAudioData.audioList[0].GenerateAudioSource(gameObject);
     }
   }
 }

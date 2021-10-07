@@ -22,6 +22,8 @@ namespace RFG.Audio
 
     public override VisualElement CreateInspectorGUI()
     {
+      rootElement.Clear();
+
       UnityEngine.Object.DestroyImmediate(editor);
       editor = Editor.CreateEditor(this);
       IMGUIContainer container = new IMGUIContainer(() =>

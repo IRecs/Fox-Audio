@@ -8,6 +8,7 @@ namespace RFG.Audio
   {
     public List<AudioData> audioList;
     public float waitForSeconds = 3f;
-    public float offset = 5f;
+    public float minDistance = 30f;
+    public float maxDistance = 35f;
   }
 }

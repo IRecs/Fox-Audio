@@ -6,6 +6,7 @@ namespace RFG.Audio
   public class RandomAudio : MonoBehaviour, IAudio
   {
     public RandomAudioData RandomAudioData;
+    public Transform spawnPosition;
 
     private AudioSource _audioSource;
     private float _waitDuration = 0f;
@@ -45,7 +46,7 @@ namespace RFG.Audio
       _lastIndex = randomIndex;
       _currentAudioData = RandomAudioData.audioList[randomIndex];
       _currentAudioData.GenerateAudioSource(gameObject);
-      transform.position = GetRandomScreenPoint();
+      transform.position = GetRandomPostion();
       if (_currentAudioData.fadeTime != 0)
       {
         StartCoroutine(_audioSource.FadeIn(_currentAudioData.fadeTime));
@@ -56,14 +57,10 @@ namespace RFG.Audio
       }
     }
 
-    private Vector3 GetRandomScreenPoint()
+    private Vector3 GetRandomPostion()
     {
-      Vector3 point = new Vector3(
-        UnityEngine.Random.Range(0, Screen.width),
-        UnityEngine.Random.Range(0, Screen.height),
-        0
-      );
-      return _mainCamera.ScreenToWorldPoint(point * RandomAudioData.offset);
+      Vector3 offset = new Vector3(Random.value - 0.5f, Random.value - 0.5f, 0).normalized * Random.Range(RandomAudioData.minDistance, RandomAudioData.maxDistance);
+      return spawnPosition.position + offset;
     }
 
     public void Play()

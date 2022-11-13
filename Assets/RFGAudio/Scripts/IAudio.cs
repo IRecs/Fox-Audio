@@ -5,5 +5,6 @@ namespace RFG.Audio
     void GenerateAudioSource();
     void Play();
     void Stop();
+    void Persist(bool persist);
   }
 }

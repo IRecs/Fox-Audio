@@ -3,64 +3,28 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Audio")]
-  public class Audio : MonoBehaviour, IAudio
+  public class Audio : AudioBase<AudioData>
   {
-    [field: SerializeField] public AudioData AudioData { get; set; }
-    private AudioSource _audioSource;
-
-    private void Awake()
+    public override void Play()
     {
-      _audioSource = GetComponent<AudioSource>();
-    }
-
-    public void Play()
-    {
-      if (AudioData.randomPitch)
-      {
-        _audioSource.pitch = UnityEngine.Random.Range(AudioData.minPitch, AudioData.maxPitch);
-      }
-      if (AudioData.fadeTime != 0f)
-      {
-        StartCoroutine(_audioSource.FadeIn(AudioData.fadeTime));
-      }
+      if (Data.randomPitch)
+        AudioSource.pitch = Random.Range(Data.minPitch, Data.maxPitch);
+      
+      if(Data.fadeTime != 0f)
+        StartCoroutine(AudioSource.FadeIn(Data.fadeTime));
       else
-      {
-        _audioSource.Play();
-      }
+        AudioSource.Play();
     }
 
-    public void Stop()
+    public override void Stop()
     {
-      if (AudioData.fadeTime != 0f)
-      {
-        StartCoroutine(_audioSource.FadeOut(AudioData.fadeTime));
-      }
+      if(Data.fadeTime != 0f)
+        StartCoroutine(AudioSource.FadeOut(Data.fadeTime));
       else
-      {
-        _audioSource.Stop();
-      }
+        AudioSource.Stop();
     }
 
-    public void Pause()
-    {
-      _audioSource.Pause();
-    }
-
-    public void Persist(bool persist)
-    {
-      if (persist)
-      {
-        DontDestroyOnLoad(gameObject);
-      }
-      else
-      {
-        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-      }
-    }
-
-    public void GenerateAudioSource()
-    {
-      AudioData.GenerateAudioSource(gameObject);
-    }
+    public void Pause() =>
+      AudioSource.Pause();
   }
 }

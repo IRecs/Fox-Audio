@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [CreateAssetMenu(fileName = "New Playlist Data", menuName = "RFG/Audio/Playlist Data")]
-  public class PlaylistData : ScriptableObject
+  public class PlaylistData :  AudioDataBase
   {
     public List<AudioData> audioList;
     public bool loop = false;
@@ -13,6 +13,8 @@ namespace RFG.Audio
     public int currentIndex = 0;
     public bool playOnAwake = false;
 
+    public override AudioData DataObject => audioList[0];
+    
     public void Initialize()
     {
       currentIndex = 0;

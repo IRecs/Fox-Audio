@@ -1,33 +1,27 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Playlist")]
-  public class Playlist : MonoBehaviour, IAudio
+  [RequireComponent(typeof(AudioSource))]
+  public class Playlist : AudioBase<PlaylistData>
   {
-    [field: SerializeField] public PlaylistData PlaylistData { get; set; }
-
-    private AudioSource _audioSource;
     private bool _isPlaying;
     private bool _isPaused;
     private IEnumerator _playingCoroutine;
 
-    private void Awake()
+    protected override void OnInitialization()
     {
-      _audioSource = GetComponent<AudioSource>();
-      PlaylistData.Initialize();
-      if (PlaylistData.playOnAwake)
-      {
+      Data.Initialize();
+      
+      if (Data.playOnAwake)
         Play();
-      }
     }
 
-    public void Play()
+    public override void Play()
     {
-      if (PlaylistData.audioList.Count == 0)
+      if (Data.audioList.Count == 0)
         return;
 
       _playingCoroutine = PlayCo();
@@ -43,9 +37,9 @@ namespace RFG.Audio
 
       while (_isPlaying)
       {
-        if (Application.isFocused && !_audioSource.isPlaying && !_isPaused)
+        if (Application.isFocused && !AudioSource.isPlaying && !_isPaused)
         {
-          if (PlaylistData.IsLast() && !PlaylistData.loop)
+          if (Data.IsLast() && !Data.loop)
           {
             _isPlaying = false;
             StopCoroutine(_playingCoroutine);
@@ -54,7 +48,7 @@ namespace RFG.Audio
 
           if (_isPlaying)
           {
-            PlaylistData.Next();
+            Data.Next();
             yield return PlayCurrentAudio();
           }
         }
@@ -64,10 +58,10 @@ namespace RFG.Audio
 
     private IEnumerator PlayCurrentAudio()
     {
-      AudioData audioData = PlaylistData.GetCurrent();
+      AudioData audioData = Data.GetCurrent();
       audioData.GenerateAudioSource(gameObject);
-      yield return new WaitForSecondsRealtime(PlaylistData.waitForSeconds);
-      yield return _audioSource.FadeIn(PlaylistData.fadeTime);
+      yield return new WaitForSecondsRealtime(Data.waitForSeconds);
+      yield return AudioSource.FadeIn(Data.fadeTime);
     }
 
     public void TogglePause()
@@ -75,67 +69,44 @@ namespace RFG.Audio
       if (_isPaused)
       {
         _isPaused = false;
-        _audioSource.UnPause();
+        AudioSource.UnPause();
       }
       else
       {
         _isPaused = true;
-        _audioSource.Pause();
+        AudioSource.Pause();
       }
     }
 
-    public void Stop()
-    {
+    public override void Stop() =>
       StartCoroutine(StopCo());
-    }
 
     private IEnumerator StopCo()
     {
       StopCoroutine(_playingCoroutine);
       _isPlaying = false;
-      yield return _audioSource.FadeOut(PlaylistData.fadeTime);
+      yield return AudioSource.FadeOut(Data.fadeTime);
       yield return null;
     }
 
-    public void Next()
-    {
+    public void Next() =>
       StartCoroutine(NextCo());
-    }
 
     private IEnumerator NextCo()
     {
       yield return StopCo();
-      PlaylistData.Next();
+      Data.Next();
       Play();
     }
 
-    public void Previous()
-    {
+    public void Previous() =>
       StartCoroutine(PreviousCo());
-    }
 
     private IEnumerator PreviousCo()
     {
       yield return StopCo();
-      PlaylistData.Previous();
+      Data.Previous();
       Play();
-    }
-
-    public void Persist(bool persist)
-    {
-      if (persist)
-      {
-        DontDestroyOnLoad(gameObject);
-      }
-      else
-      {
-        UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-      }
-    }
-
-    public void GenerateAudioSource()
-    {
-      PlaylistData.audioList[0].GenerateAudioSource(gameObject);
     }
   }
 }

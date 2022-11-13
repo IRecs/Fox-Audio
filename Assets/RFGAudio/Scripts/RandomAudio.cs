@@ -3,87 +3,65 @@ using UnityEngine;
 namespace RFG.Audio
 {
   [AddComponentMenu("RFG/Audio/Random Audio")]
-  public class RandomAudio : MonoBehaviour, IAudio
+  public class RandomAudio : AudioBase<RandomAudioData>
   {
-    public RandomAudioData RandomAudioData;
-    public Transform spawnPosition;
+    [SerializeField] private  Transform _spawnPosition;
 
-    private AudioSource _audioSource;
     private float _waitDuration = 0f;
-    private Camera _mainCamera;
     private int _lastIndex;
     private bool _isPlaying = true;
     private AudioData _currentAudioData;
 
-    private void Awake()
-    {
-      _audioSource = GetComponent<AudioSource>();
-      _mainCamera = Camera.main;
-    }
-
     private void LateUpdate()
     {
       if (!_isPlaying)
-      {
         return;
-      }
+      
       _waitDuration += Time.deltaTime;
-      if (_waitDuration > RandomAudioData.waitForSeconds)
-      {
+      
+      if (_waitDuration > Data.waitForSeconds)
         PlayRandom();
-      }
     }
 
     public void PlayRandom()
     {
       _waitDuration = 0f;
-      int randomIndex = UnityEngine.Random.Range(0, RandomAudioData.audioList.Count - 1);
+      int randomIndex = UnityEngine.Random.Range(0, Data.audioList.Count - 1);
+      
       if (randomIndex == _lastIndex)
       {
         PlayRandom();
         return;
       }
+      
       _lastIndex = randomIndex;
-      _currentAudioData = RandomAudioData.audioList[randomIndex];
+      _currentAudioData = Data.audioList[randomIndex];
       _currentAudioData.GenerateAudioSource(gameObject);
-      transform.position = GetRandomPostion();
-      if (_currentAudioData.fadeTime != 0)
-      {
-        StartCoroutine(_audioSource.FadeIn(_currentAudioData.fadeTime));
-      }
+      transform.position = GetRandomPosition();
+
+      if(_currentAudioData.fadeTime != 0)
+        StartCoroutine(AudioSource.FadeIn(_currentAudioData.fadeTime));
       else
-      {
-        _audioSource.Play();
-      }
+        AudioSource.Play();
     }
 
-    private Vector3 GetRandomPostion()
+    private Vector3 GetRandomPosition()
     {
-      Vector3 offset = new Vector3(Random.value - 0.5f, Random.value - 0.5f, 0).normalized * Random.Range(RandomAudioData.minDistance, RandomAudioData.maxDistance);
-      return spawnPosition.position + offset;
+      Vector3 offset = new Vector3(Random.value - 0.5f, Random.value - 0.5f, 0).normalized * Random.Range(Data.minDistance, Data.maxDistance);
+      return _spawnPosition.position + offset;
     }
 
-    public void Play()
-    {
+    public override void Play() =>
       _isPlaying = true;
-    }
 
-    public void Stop()
+    public override void Stop()
     {
       _isPlaying = false;
-      if (_currentAudioData.fadeTime != 0)
-      {
-        StartCoroutine(_audioSource.FadeOut(_currentAudioData.fadeTime));
-      }
+      
+      if(_currentAudioData.fadeTime != 0)
+        StartCoroutine(AudioSource.FadeOut(_currentAudioData.fadeTime));
       else
-      {
-        _audioSource.Stop();
-      }
-    }
-
-    public void GenerateAudioSource()
-    {
-      RandomAudioData.audioList[0].GenerateAudioSource(gameObject);
+        AudioSource.Stop();
     }
   }
 }

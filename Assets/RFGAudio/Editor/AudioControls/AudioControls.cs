@@ -43,7 +43,7 @@ namespace RFG.Audio
       Button generateAudioSourceButton = rootElement.Q<Button>("generate-audio-source");
       generateAudioSourceButton.clicked += () =>
       {
-        audioTarget.AudioData.GenerateAudioSource(audioTarget.gameObject);
+        audioTarget.Data.DataObject.GenerateAudioSource(audioTarget.gameObject);
       };
 
       Button stopButton = rootElement.Q<Button>("stop");

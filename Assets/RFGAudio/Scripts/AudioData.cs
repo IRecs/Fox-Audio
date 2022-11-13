@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 namespace RFG.Audio
 {
   [CreateAssetMenu(fileName = "New Audio Data", menuName = "RFG/Audio/Audio Data")]
-  public class AudioData : ScriptableObject
+  public class AudioData : AudioDataBase
   {
     public AudioClip clip;
     public AudioMixerGroup outputAudioMixerGroup;
@@ -33,5 +33,8 @@ namespace RFG.Audio
     public float maxDistance = 100f;
     public AudioRolloffMode rolloffMode;
 
+    public override AudioData DataObject => this;
   }
+
+
 }

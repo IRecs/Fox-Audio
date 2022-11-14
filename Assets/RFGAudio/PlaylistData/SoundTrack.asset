@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31bc8bad5ea3578489548a827a77118f, type: 2}
   - {fileID: 11400000, guid: 623ea7fc9f475a64ead5b81c20129e27, type: 2}
   loop: 1
-  waitForSeconds: 1
+  waitForSeconds: 0.2
   fadeTime: 1
-  currentIndex: 0
+  currentIndex: 1
   playOnAwake: 1

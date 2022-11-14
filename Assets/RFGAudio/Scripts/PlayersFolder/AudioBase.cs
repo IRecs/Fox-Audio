@@ -9,9 +9,13 @@ namespace RFG.Audio
 		[field:SerializeField] public T Data { get; private set; }
 		protected AudioSource AudioSource;
 		private Transform _target;
-		
-		public event Action<GameObject> End;
 
+		public Type Type { get; set; }
+		public event Action<IAudio> End;
+
+		public string Name { get; set; }
+		public GameObject GameObject => gameObject;
+		
 		private void Awake() =>
 			AudioSource = GetComponent<AudioSource>();
 
@@ -52,7 +56,16 @@ namespace RFG.Audio
 				UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
 		}
 
+		protected void OnStop()
+		{
+			_target = null;
+			End?.Invoke(this);
+		}
+
 		public void GenerateAudioSource() =>
 			Data.DataObject.GenerateAudioSource(gameObject);
+		
+		private void OnDisable() =>
+			Stop();
 	}
 }

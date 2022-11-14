@@ -23,11 +23,17 @@ namespace RFG.Audio
 
 			IAudio audio = _objects[getobject.GetType()].First();
 			_objects[getobject.GetType()].Remove(audio);
+			
 			getobject = (T) audio;
 			return true;
 		}
 
-		public void Add<T>(T getobject) where T : IAudio =>
-			_objects[getobject.GetType()].Add(getobject);
+		public void Add(Type type, IAudio audio)
+		{
+			if(!_objects.ContainsKey(type))
+				throw new Exception("Is not IAudio");
+			
+			_objects[type].Add(audio);
+		}
 	}
 }

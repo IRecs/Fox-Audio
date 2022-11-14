@@ -75,6 +75,11 @@ _manager.StopAllAudio(string key)
 
 Все методы возвращают bool.
 ```
+**Audio Data**
 <a href="https://ibb.co/qB8Tmzw"><img src="https://i.ibb.co/rkhD5gJ/Fox-Audio-Manager-0-5.png" alt="Fox-Audio-Manager-0-5" border="0"></a>
+______________________
+**PlaylistData**
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/cQVB5fQ/Fox-Audio-Manager-0-6.png" alt="Fox-Audio-Manager-0-6" border="0"></a>
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/HVHQgxP/Fox-Audio-Manager-0-7.png" alt="Fox-Audio-Manager-0-7" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>make picture circle online</a><br />
+______________________
+**RandomAudioData**
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/HVHQgxP/Fox-Audio-Manager-0-7.png" alt="Fox-Audio-Manager-0-7" border="0"></a>

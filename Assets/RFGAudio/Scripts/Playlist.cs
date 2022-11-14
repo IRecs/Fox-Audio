@@ -10,6 +10,7 @@ namespace RFG.Audio
     private bool _isPlaying;
     private bool _isPaused;
     private IEnumerator _playingCoroutine;
+    private bool _witePlayCurrentAudio;
 
     protected override void OnInitialization()
     {
@@ -58,10 +59,15 @@ namespace RFG.Audio
 
     private IEnumerator PlayCurrentAudio()
     {
+      if(_witePlayCurrentAudio)
+        yield break;
+      
+      _witePlayCurrentAudio = true;
       AudioData audioData = Data.GetCurrent();
       audioData.GenerateAudioSource(gameObject);
       yield return new WaitForSecondsRealtime(Data.waitForSeconds);
       yield return AudioSource.FadeIn(Data.fadeTime);
+      _witePlayCurrentAudio = false;
     }
 
     public void TogglePause()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RFG.Audio
 {
@@ -7,19 +8,38 @@ namespace RFG.Audio
 	{
 		[field:SerializeField] public T Data { get; private set; }
 		protected AudioSource AudioSource;
+		private Transform _target;
+		
+		public event Action<GameObject> End;
 
 		private void Awake() =>
 			AudioSource = GetComponent<AudioSource>();
 
-		public void Initialization(T playlistData)
+		private void LateUpdate()
+		{
+			if(_target == null)
+				return;
+			
+			transform.position = _target.position;
+		}
+
+		public void Initialization(T playlistData, bool persist)
 		{
 			Data = playlistData;
+			GenerateAudioSource();
+			Persist(persist);
 			AudioSource ??= GetComponent<AudioSource>();
 			OnInitialization();
 		}
+		
+		public void SetPosition(Vector3 spawnPoint) =>
+			transform.position = spawnPoint;
+
+		public void SetTarget(Transform target) =>
+			_target = target;
 
 		protected virtual void OnInitialization(){}
-    
+
 		public abstract void Play();
 
 		public abstract void Stop();

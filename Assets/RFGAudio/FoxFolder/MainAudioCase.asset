@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8750436a494a42e7820e825e800e0a9e, type: 3}
+  m_Name: MainAudioCase
+  m_EditorClassIdentifier: 
+  _soloAudio:
+  - Name: Wind
+    AudioData: {fileID: 11400000, guid: 00516b7ef30bb6c4cb2157bf3e8209fc, type: 2}
+  - Name: Warp
+    AudioData: {fileID: 11400000, guid: 84a37bb903cb9554aaf5ec14b6d7a0a8, type: 2}
+  - Name: Jump
+    AudioData: {fileID: 11400000, guid: f3f27123501419c458b073a4a83276b3, type: 2}
+  _playListAudio:
+  - Name: SoundTrack
+    AudioData: {fileID: 11400000, guid: 6c5bd57316475c840b2e3c0ad0c8c858, type: 2}
+  _randomAudio:
+  - Name: RandomAmbience
+    AudioData: {fileID: 11400000, guid: cc4e6d0ad92b61d4b8569920cb5ba069, type: 2}
+  _audioPrefab: {fileID: 5420872890265000807, guid: c69e4d6a98526184588918e24bfc8d01, type: 3}
+  _playlistPrefab: {fileID: 5353355670070630838, guid: 5274cbfa8dcc9ad428592c0f643ae97b, type: 3}
+  _randomAudioPrefab: {fileID: 9218017704323561043, guid: 75d2c29820ad0784db629f12a10b4226, type: 3}

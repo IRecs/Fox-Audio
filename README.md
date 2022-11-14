@@ -27,11 +27,11 @@ ______________________
 Компонент ***AudioMixerSettingsPanel*** служит исключительно для инициализации микшеров.
 
 
-![0.1](https://i.ibb.co/4K3sK6h/Fox-Audio-Manager-0-1.png)
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/4K3sK6h/Fox-Audio-Manager-0-1.png" alt="Fox-Audio-Manager-0-1" border="0" /></a>
 
 ***FoxAudioManager*** имеет всего одно редактируемое поле ***Audio Case*** 
 
-![0.2](https://i.ibb.co/vwgS145/Fox-Audio-Manager-0-2.png)
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/vwgS145/Fox-Audio-Manager-0-2.png" alt="Fox-Audio-Manager-0-2" border="0" /></a>
 
 Тут храниться все доступные для использования аудио файлы.
 Они делается на 3 типа.

@@ -14,11 +14,6 @@ namespace RFG.Audio
 
 		private Dictionary<string, List<IAudio>> _playingAudio;
 
-		private void Awake()
-		{
-			Initialization();
-		}
-
 		public void Initialization()
 		{
 			if(_instance !=null && _instance != this)
@@ -30,21 +25,6 @@ namespace RFG.Audio
 			_playingAudio = new Dictionary<string, List<IAudio>>();
 			_audioGenerator = new AudioGenerator(_audioCase);
 			_audioObject = new AudioObjectPool();
-		}
-
-		private void Start()
-		{
-			PlayAudioFollowingTarget("SoundTrack", Camera.main.transform, true);
-			PlayAudio("Warp", transform.position, true);
-		}
-
-		private void Update()
-		{
-			if(Input.GetKeyDown(KeyCode.G))
-				PlayAudio("Warp", transform.position, true);
-			
-			if(Input.GetKeyDown(KeyCode.P))
-				StopAudio("SoundTrack");
 		}
 
 		public bool StopAudio(string key)
@@ -141,7 +121,7 @@ namespace RFG.Audio
 			if(audioCase is not TAudioCase tAudioCase)
 				return false;
 			
-			TAudioBase audio = new ();
+			TAudioBase audio = new TAudioBase();
 
 			if(!_audioObject.Get(ref audio))
 				_audioGenerator.Generate(ref audio);

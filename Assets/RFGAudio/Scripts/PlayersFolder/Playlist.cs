@@ -85,8 +85,13 @@ namespace RFG.Audio
       }
     }
 
-    public override void Stop() =>
-      StartCoroutine(StopCo());
+    public override void Stop()
+    {
+      if(gameObject.activeInHierarchy)
+        StartCoroutine(StopCo());
+      else
+        OnStop();
+    }
 
     private IEnumerator StopCo()
     {

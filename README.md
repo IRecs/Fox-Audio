@@ -31,7 +31,7 @@ ______________________
 
 ***FoxAudioManager*** имеет всего одно редактируемое поле ***Audio Case*** 
 
-![0.2](https://i.ibb.co/vwgS145/Fox-Audio-Manager-0-2.png)
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/v1nb9xx/Fox-Audio-Manager-0-4.png" alt="Fox-Audio-Manager-0-4" border="0"></a>
 
 Тут храниться все доступные для использования аудио файлы.
 Они делается на 3 типа.
@@ -75,3 +75,6 @@ _manager.StopAllAudio(string key)
 
 Все методы возвращают bool.
 ```
+<a href="https://ibb.co/qB8Tmzw"><img src="https://i.ibb.co/rkhD5gJ/Fox-Audio-Manager-0-5.png" alt="Fox-Audio-Manager-0-5" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/cQVB5fQ/Fox-Audio-Manager-0-6.png" alt="Fox-Audio-Manager-0-6" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/HVHQgxP/Fox-Audio-Manager-0-7.png" alt="Fox-Audio-Manager-0-7" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>make picture circle online</a><br />

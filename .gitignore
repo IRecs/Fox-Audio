@@ -5,9 +5,16 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
+/[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
+Library/
+Recordings/
+Temp/
+
+AmplifyShaderEditor/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -20,6 +27,8 @@
 
 # Visual Studio cache directory
 .vs/
+# VS Code
+*.vscode
 
 # Gradle cache directory
 .gradle/
@@ -42,6 +51,7 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
@@ -52,9 +62,22 @@ sysinfo.txt
 
 # Builds
 *.apk
-*.unitypackage
-!RFGAudio*.unitypackage
 
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+URP-Template/Logs/shadercompiler-AssetImportWorker0.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe0.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe1.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe2.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe3.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe4.log
+URP-Template/Logs/shadercompiler-UnityShaderCompiler.exe5.log
+Assets/_Examples.meta
+.idea/.idea.DS1-HC-Template_CPI/.idea

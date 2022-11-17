@@ -1,16 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RFG.Audio
 {
-	public class AudioMixerSettingsPanel : MonoBehaviour
-	{
-		[SerializeField] private List<AudioMixerSettings> _audioMixerSettings;
-    
-		private void Start()
-		{
-			foreach (AudioMixerSettings settings in _audioMixerSettings)
-				settings.Initialize();
-		}
-	}
+    [Serializable]
+    public class AudioMixerSettingsPanel
+    {
+        [SerializeField] private List<AudioMixerSettings> _audioMixerSettings;
+
+        public void Initialization()
+        {
+            foreach (AudioMixerSettings settings in _audioMixerSettings)
+                settings.Initialize();
+
+        }
+
+        private void Mute()
+        {
+            foreach (AudioMixerSettings audioMixerSetting in _audioMixerSettings)
+                audioMixerSetting.Mute();
+        }
+
+        private void Unmute()
+        {
+            foreach (AudioMixerSettings audioMixerSetting in _audioMixerSettings)
+                audioMixerSetting.Unmute();
+        }
+    }
 }

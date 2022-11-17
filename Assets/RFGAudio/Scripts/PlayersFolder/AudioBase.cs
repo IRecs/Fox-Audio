@@ -49,12 +49,7 @@ namespace RFG.Audio
 		public abstract void Stop();
 
 		public void Persist(bool persist)
-		{
-			if(persist)
-				DontDestroyOnLoad(gameObject);
-			else
-				UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
-		}
+		{}
 
 		protected void OnStop()
 		{

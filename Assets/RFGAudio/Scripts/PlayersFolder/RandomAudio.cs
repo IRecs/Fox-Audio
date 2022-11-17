@@ -1,81 +1,85 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace RFG.Audio
 {
-  [AddComponentMenu("RFG/Audio/Random Audio")]
-  public class RandomAudio : AudioBase<RandomAudioData>
-  {
-    private float _waitDuration = 0f;
-    private int _lastIndex;
-    private bool _isPlaying = true;
-    private AudioData _currentAudioData;
-    private int _countPlay = 0;
-    
-    private void LateUpdate()
-    {
-      if (!_isPlaying)
-        return;
-      
-      _waitDuration += Time.deltaTime;
+	[AddComponentMenu("RFG/Audio/Random Audio")]
+	public class RandomAudio : AudioBase<RandomAudioData>
+	{
+		private int _lastIndex;
+		private bool _isPlaying = true;
+		private AudioData _currentAudioData;
+		private int _countPlay = 0;
 
-      if(_waitDuration > Data.waitForSeconds)
-      {
-        if(Data.isLoop || _countPlay < 1)
-          PlayRandom();
-        else
-          Stop();
+		public void PlayRandom()
+		{
+			_countPlay++;
+			int randomIndex = Random.Range(0, Data.audioList.Count - 1);
 
-      }
-    }
+			if(randomIndex == _lastIndex)
+			{
+				if(Data.audioList.Count <= 2)
+				{
+					randomIndex = Math.Max(Data.audioList.Count - 1, randomIndex == 0 ? 1 : 0);
+				}
+				else
+				{
+					PlayRandom();
+					return;
+				}
+			}
 
-    public void PlayRandom()
-    {
-      _countPlay++;
-      _waitDuration = 0f;
-      int randomIndex = UnityEngine.Random.Range(0, Data.audioList.Count - 1);
-      
-      if (randomIndex == _lastIndex)
-      {
-        PlayRandom();
-        return;
-      }
-      
-      _lastIndex = randomIndex;
-      _currentAudioData = Data.audioList[randomIndex];
-      _currentAudioData.GenerateAudioSource(gameObject);
-      transform.localPosition = GetRandomPosition();
+			_lastIndex = randomIndex;
+			_currentAudioData = Data.audioList[randomIndex];
+			_currentAudioData.GenerateAudioSource(gameObject);
 
-      if(_currentAudioData.fadeTime != 0)
-        StartCoroutine(AudioSource.FadeIn(_currentAudioData.fadeTime));
-      else
-        AudioSource.Play();
-    }
+			if(_currentAudioData.fadeTime != 0)
+				StartCoroutine(AudioSource.FadeIn(_currentAudioData.fadeTime));
+			else
+			{
+				AudioSource.Play();
+				StartCoroutine(WaitePlaying());
+			}
+		}
 
-    private Vector3 GetRandomPosition()
-    {
-      Vector3 offset = new Vector3(Random.value - 0.5f, Random.value - 0.5f, 0).normalized * Random.Range(Data.minDistance, Data.maxDistance);
-      return Vector3.zero + offset;
-    }
+		private IEnumerator WaitePlaying()
+		{
+			yield return new WaitForSecondsRealtime(_currentAudioData.clip.length);
 
-    public override void Play()
-    {
-      _countPlay = 0;
-      _isPlaying = true;
-    }
+			if(!_isPlaying)
+				yield break;
 
-    public override void Stop()
-    {
-      _isPlaying = false;
+			if(Data.isLoop || _countPlay < 1)
+				PlayRandom();
+			else
+				Stop();
+		}
 
-      if(_currentAudioData.fadeTime != 0)
-      {
-        StartCoroutine(AudioSource.FadeOut(_currentAudioData.fadeTime));
-      }
-      else
-      {
-        AudioSource.Stop();
-        OnStop();
-      }
-    }
-  }
+		public override void Play()
+		{
+			_countPlay = 0;
+			PlayRandom();
+		}
+
+		public override void Stop()
+		{
+			_isPlaying = false;
+
+			if(gameObject == null && !gameObject.activeInHierarchy)
+				return;
+
+			if(_currentAudioData.fadeTime != 0)
+			{
+				StartCoroutine(AudioSource.FadeOut(_currentAudioData.fadeTime));
+			}
+			else
+			{
+				AudioSource.Stop();
+				OnStop();
+			}
+
+		}
+	}
 }

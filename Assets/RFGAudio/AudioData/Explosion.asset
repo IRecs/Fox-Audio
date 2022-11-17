@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61807c3d8563ee4499534256306a9d0, type: 3}
   m_Name: Explosion
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: e20469ae346b6024a93b515edc8ea705, type: 3}
+  clip: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
   outputAudioMixerGroup: {fileID: 24300002, guid: b794087077b20a04c88c11819be152af, type: 2}
-  volume: 1
+  volume: 0.853
   pitch: 1
   randomPitch: 0
   minPitch: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   fadeTime: 0
   spacialBlend: 1
   minDistance: 1
-  maxDistance: 100
-  rolloffMode: 0
+  maxDistance: 1000
+  rolloffMode: 2

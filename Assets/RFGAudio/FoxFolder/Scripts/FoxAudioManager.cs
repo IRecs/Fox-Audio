@@ -8,7 +8,7 @@ namespace RFG.Audio
 	{
 		[SerializeField] private MainAudioCase _audioCase;
 		[SerializeField] private AudioMixerSettingsPanel _audioMixer;
-		
+
 		private AudioGenerator _audioGenerator;
 
 		private AudioObjectPool _audioObject;
@@ -17,145 +17,125 @@ namespace RFG.Audio
 
 		public static FoxAudioManager Instance { get; private set; }
 
-		private Dictionary<string, List<IAudio>> _playingAudio;
+		private FoxAudioManagerDataPool _dataPool;
 
 		public void Initialization()
 		{
-			if(Instance !=null && Instance != this)
+			if(Instance != null && Instance != this)
 				Destroy(gameObject);
 
 			Instance = this;
-			
+
 			DontDestroyOnLoad(gameObject);
-			_playingAudio = new Dictionary<string, List<IAudio>>();
+			_dataPool = new FoxAudioManagerDataPool();
 			_audioGenerator = new AudioGenerator(_audioCase);
 			_audioObject = new AudioObjectPool();
 		}
 
-		public void OnStart()
-		{
+		public void OnStart() =>
 			_audioMixer.Initialization();
-		}
 
-		public bool StopAudio(string key)
+		public bool StopAudio(ControlledAudioResource controlledAudioResource)
 		{
-			if(!_playingAudio.ContainsKey(key))
-				return false;
-			if(_playingAudio[key].Count <= 0)
+			if(!_dataPool.TryGetControlledAudioResource(controlledAudioResource))
 				return false;
 			
-			IAudio audio = _playingAudio[key][0];
-			audio.Stop();
-
-			return true;
-		}
-
-		public bool StopAllAudio(string key)
-		{
-			if(!_playingAudio.ContainsKey(key))
-				return false;
-			if(_playingAudio[key].Count <= 0)
-				return false;
-
-			while (_playingAudio[key].Count > 0) 
-				_playingAudio[key][0].Stop();
-
+			controlledAudioResource.Audio.Stop();
 			return true;
 		}
 
 		public void StopAllAudio()
 		{
-			foreach (var key in _playingAudio) 
-				StopAudio(key.Key);
+			List<ControlledAudioResource> resources =_dataPool.GetAll();
+
+			foreach(ControlledAudioResource resource in resources)
+				resource.Audio.Stop();
 		}
 
-		public bool PlayAudioFollowingTarget(string key, Transform target, bool persist = false)
+		public bool PlayAudio(string key, Vector3 spawnPosition, out ControlledAudioResource controlledAudioResource) =>
+			Play(key, spawnPosition,  out controlledAudioResource);
+
+		public bool PlayAudioFollowingTarget(string key, Transform target, out ControlledAudioResource controlledAudioResource)
 		{
-			if(!PlayAudio(key,  target.position, out IAudio iAudio, persist))
+			bool result = Play(key, target.position,  out controlledAudioResource);
+			controlledAudioResource.Audio.SetTarget(target);
+			return result;
+		}
+
+		private bool Play(string key, Vector3 spawnPosition, out ControlledAudioResource resource)
+		{
+			if(!TryPlayAudio(key, out resource))
 				return false;
-			
-			iAudio.SetTarget(target);
-			return true;
-		}
 
-		public bool PlayAudio(string key, Vector3 spawnPosition, bool persist = false)
-		{
-			return PlayAudio(key, spawnPosition, out IAudio iAudio, persist);
-		}
+			resource.Audio.SetPosition(spawnPosition);
+			resource.Audio.Name = key;
+			resource.Audio.End += AudioOnEnd;
 
-		private bool PlayAudio(string key, Vector3 spawnPosition, out IAudio iAudio,bool persist = false)
-		{
-			if(!TryPlayAudio(key, persist, out iAudio))
-				return false;
-			
-			iAudio.SetPosition(spawnPosition);
-			iAudio.Name = key;
-			iAudio.End += AudioOnEnd;
-			
-			if(!_playingAudio.ContainsKey(key))
-				_playingAudio.Add(key, new List<IAudio>());
-			
-			_playingAudio[key].Add(iAudio);
-			
-			iAudio.GameObject.SetActive(true);
-			iAudio.Play();
+			_dataPool.Add(resource);
+
+			resource.Audio.GameObject.SetActive(true);
+			resource.Audio.Play();
 			return true;
 		}
 
 		private void AudioOnEnd(IAudio audio)
 		{
 			audio.End -= AudioOnEnd;
-			_playingAudio[audio.Name].Remove(audio);
-			audio.Persist(false);
+			_dataPool.Get(audio);
 
-			if (audio.GameObject == null) 
+			if(audio.GameObject == null)
 				return;
-			
+
 			audio.GameObject.SetActive(false);
 			_audioObject.Add(audio.Type, audio);
-			
 		}
 
-		private bool TryPlayAudio(string key, bool persist, out IAudio iAudio)
+		private bool TryPlayAudio(string key, out ControlledAudioResource iAudio)
 		{
 			iAudio = null;
-			
+
 			if(!_audioCase.TryGetAudioCase(key, out IAudioCase audioCase))
 				return false;
-			
-			if(TryPlay<PlayListAudioCase, PlaylistData, Playlist>(persist, audioCase, out iAudio))
+
+			if(TryPlay<PlayListAudioCase, PlaylistData, Playlist>(audioCase, out iAudio))
 				return true;
-			if(TryPlay<SoloAudioCase, AudioData, Audio>(persist, audioCase, out iAudio))
+			if(TryPlay<SoloAudioCase, AudioData, Audio>(audioCase, out iAudio))
 				return true;
-			if(TryPlay<RandomAudioCase, RandomAudioData, RandomAudio>(persist, audioCase, out iAudio))
+			if(TryPlay<RandomAudioCase, RandomAudioData, RandomAudio>(audioCase, out iAudio))
 				return true;
-			
+
 			return false;
 		}
 
-		private bool TryPlay<TAudioCase, TAudioDataBase, TAudioBase>(bool persist, IAudioCase audioCase, out IAudio iAudio) 
-			where TAudioDataBase : AudioDataBase  
-			where TAudioCase : AudioCase<TAudioDataBase> 
-			where TAudioBase : AudioBase<TAudioDataBase> , new()
+		private bool TryPlay<TAudioCase, TAudioDataBase, TAudioBase>(IAudioCase audioCase, out ControlledAudioResource iAudio)
+			where TAudioDataBase : AudioDataBase
+			where TAudioCase : AudioCase<TAudioDataBase>
+			where TAudioBase : AudioBase<TAudioDataBase>, new()
 		{
 			iAudio = null;
-			
+
 			if(!(audioCase is TAudioCase tAudioCase))
 				return false;
-			
+
 			TAudioBase audio = new TAudioBase();
 
-			if (!_audioObject.Get(ref audio))
+			if(!_audioObject.Get(ref audio))
 			{
 				_audioGenerator.Generate(ref audio);
+
+				if(audio is IAudio setIDAudio)
+					setIDAudio.ID = $"{typeof(IAudio)}_{Time.time}_{Guid.NewGuid()}";
+
 				audio.GameObject.transform.SetParent(transform);
 			}
 
 			audio.name = tAudioCase.Key;
-			audio.Initialization(tAudioCase.AudioData, persist);
+			audio.Initialization(tAudioCase.AudioData);
 			audio.Type = typeof(TAudioBase);
-			iAudio = audio;
+			iAudio = new ControlledAudioResource(audio);
 			return true;
 		}
 	}
+
+
 }

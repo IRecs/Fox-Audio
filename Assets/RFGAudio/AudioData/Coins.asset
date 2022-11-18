@@ -20,7 +20,7 @@ MonoBehaviour:
   minPitch: 0.68
   maxPitch: 0.48
   playOnAwake: 0
-  loop: 0
+  loop: 1
   fadeTime: 0
   spacialBlend: 1
   minDistance: 1

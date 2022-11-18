@@ -2,13 +2,12 @@
 
 namespace RFG.Audio
 {
-    public interface IFoxAudioManager
-    {
-        bool StopAudio(string key);
-        bool StopAllAudio(string key);
-        bool PlayAudioFollowingTarget(string key, Transform target, bool persist = false);
-        bool PlayAudio(string key, Vector3 spawnPosition, bool persist = false);
-        void StopAllAudio();
-        AudioMixerSettingsPanel Mixer { get; }
-    }
+	public interface IFoxAudioManager
+	{
+		bool StopAudio(ControlledAudioResource controlledAudioResource);
+		bool PlayAudioFollowingTarget(string key, Transform target, out ControlledAudioResource controlledAudioResource);
+		bool PlayAudio(string key, Vector3 spawnPosition, out ControlledAudioResource controlledAudioResource);
+		void StopAllAudio();
+		AudioMixerSettingsPanel Mixer { get; }
+	}
 }

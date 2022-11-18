@@ -10,10 +10,12 @@ namespace RFG.Audio
 		protected AudioSource AudioSource;
 		private Transform _target;
 
+		public string ID { get; set; }
+		public string Name { get; set; }
 		public Type Type { get; set; }
+		
 		public event Action<IAudio> End;
 
-		public string Name { get; set; }
 		public GameObject GameObject => gameObject;
 		
 		private void Awake() =>
@@ -27,11 +29,10 @@ namespace RFG.Audio
 			transform.position = _target.position;
 		}
 
-		public void Initialization(T playlistData, bool persist)
+		public void Initialization(T playlistData)
 		{
 			Data = playlistData;
 			GenerateAudioSource();
-			Persist(persist);
 			AudioSource ??= GetComponent<AudioSource>();
 			OnInitialization();
 		}
@@ -47,9 +48,6 @@ namespace RFG.Audio
 		public abstract void Play();
 
 		public abstract void Stop();
-
-		public void Persist(bool persist)
-		{}
 
 		protected void OnStop()
 		{

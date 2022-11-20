@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/RFGAudio/Samples/Scenes/Audio1.unity
+    path: Assets/FoxAudioSystem/Samples/Scenes/Audio1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/RFGAudio/Samples/Scenes/Audio2.unity
+    path: Assets/FoxAudioSystem/Samples/Scenes/Audio2.unity
     guid: 3b3eeb6652d280e4f9c1c13f579c7e63
   m_configObjects: {}

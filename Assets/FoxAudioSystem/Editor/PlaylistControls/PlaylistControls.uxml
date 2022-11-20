@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/FoxAudioSystem/Editor/PlaylistControls/PlaylistControls.uss?fileID=7433441132597879392&amp;guid=749c26ba953a7234fbbab82a5b5aefdf&amp;type=3#PlaylistControls" />
+    <ui:VisualElement>
+        <ui:VisualElement class="container">
+            <ui:Button text="Generate Audio Source" display-tooltip-when-elided="true" name="generate-audio-source" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement class="container">
+            <ui:Button display-tooltip-when-elided="true" name="previous" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Prev.png?fileID=2800000&amp;guid=2d609409f787e60428d0f7e11ed26467&amp;type=3#AudioControls_Prev&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="stop" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Stop.png?fileID=2800000&amp;guid=e83217dfff56b3642a1f26b0693e7fa3&amp;type=3#AudioControls_Stop&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="play" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Play.png?fileID=2800000&amp;guid=fcbb20ff6066516459493d787c266e63&amp;type=3#AudioControls_Play&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="pause" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Pause.png?fileID=2800000&amp;guid=fbddef0c7ec4c854b9ebc2be9ad9111d&amp;type=3#AudioControls_Pause&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="next" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Next.png?fileID=2800000&amp;guid=8945028e708a86d41bb501f8290a1ec0&amp;type=3#AudioControls_Next&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

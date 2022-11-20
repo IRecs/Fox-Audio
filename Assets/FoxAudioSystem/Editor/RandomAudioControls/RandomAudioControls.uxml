@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/FoxAudioSystem/Editor/RandomAudioControls/RandomAudioControls.uss?fileID=7433441132597879392&amp;guid=8146209653eba0f46a2ce66d7f9f2484&amp;type=3#RandomAudioControls" />
+    <ui:VisualElement>
+        <ui:VisualElement class="container">
+            <ui:Button text="Generate Audio Source" display-tooltip-when-elided="true" name="generate-audio-source" class="button" />
+        </ui:VisualElement>
+        <ui:VisualElement class="container">
+            <ui:Button display-tooltip-when-elided="true" name="play" class="button">
+                <ui:VisualElement style="background-image: url(&apos;project://database/Assets/FoxAudioSystem/Icons/AudioControls_Play.png?fileID=2800000&amp;guid=fcbb20ff6066516459493d787c266e63&amp;type=3#AudioControls_Play&apos;); width: 16px; height: 16px;" />
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

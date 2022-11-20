@@ -52,7 +52,7 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 		{
 			_audios.Remove((SoloAudioPlayer)audio);
 
-			if(_mainAudio == audio && _audios.Count > 0)
+			if(_mainAudio.Equals(audio) && _audios.Count > 0)
 				_mainAudio = _audios[0];
 
 			SynchronizeVolume();

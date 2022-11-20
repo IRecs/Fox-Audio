@@ -7,14 +7,14 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
 {
   [AddComponentMenu("FoxAudioSystem/Audio/Playlist")]
   [RequireComponent(typeof(AudioSource))]
-  public class PlaylistPLayer : AudioBase<PlaylistData>
+  public class PlaylistPLayer : AudioBase<PlaylistDataCase>
   {
     private bool _isPlaying;
     private bool _isPaused;
     private IEnumerator _playingCoroutine;
     private bool _waitePlayCurrentAudio;
 
-    protected override void OnInitialization(PlaylistData data)
+    protected override void OnInitialization(PlaylistDataCase dataCase)
     {
       Data.Initialize();
       

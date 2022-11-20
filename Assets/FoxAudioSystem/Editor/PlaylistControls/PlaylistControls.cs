@@ -2,7 +2,7 @@ using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace FoxAudioSystem.Editor.PlaylistControls
+namespace FoxAudioSystem.EditorFolder.PlaylistControls
 {
 	[CustomEditor(typeof(PlaylistPLayer))]
 	public class PlaylistControls : UnityEditor.Editor

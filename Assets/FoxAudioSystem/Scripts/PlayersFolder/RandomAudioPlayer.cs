@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace FoxAudioSystem.Scripts.PlayersFolder
 {
 	[AddComponentMenu("FoxAudioSystem/Audio/Random Audio")]
-	public class RandomAudioPlayer : AudioBase<RandomAudioData>
+	public class RandomAudioPlayer : AudioBase<RandomAudioDataCase>
 	{
 		private int _lastIndex;
 		private bool _isPlaying = true;

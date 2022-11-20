@@ -13,13 +13,13 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 
 		public void Initialization(ref Dictionary<string, IAudioCase> cases)
 		{
-			foreach(SoloAudioCase soloAudio in _soloAudio)
+			foreach(SoloAudioCase soloAudio in _soloAudio.Where(s => !s.IsNull))
 				cases.Add(soloAudio.Key, soloAudio);
 
-			foreach(PlayListAudioCase playListAudio in _playListAudio)
+			foreach(PlayListAudioCase playListAudio in _playListAudio.Where(p => !p.IsNull))
 				cases.Add(playListAudio.Key, playListAudio);
 
-			foreach(RandomAudioCase randomAudio in _randomAudio)
+			foreach(RandomAudioCase randomAudio in _randomAudio.Where(r => !r.IsNull))
 				cases.Add(randomAudio.Key, randomAudio);
 		}
 

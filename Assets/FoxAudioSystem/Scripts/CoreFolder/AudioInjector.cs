@@ -9,10 +9,8 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 	{
 		[SerializeField] private FoxAudioManager _prefab;
 
-		private void Awake()
-		{
+		private void Awake() =>
 			Inject();
-		}
 
 		public void Inject()
 		{

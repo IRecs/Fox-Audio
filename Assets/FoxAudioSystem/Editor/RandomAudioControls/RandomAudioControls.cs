@@ -2,7 +2,7 @@ using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace FoxAudioSystem.Editor.RandomAudioControls
+namespace FoxAudioSystem.EditorFolder.RandomAudioControls
 {
   [CustomEditor(typeof(RandomAudioPlayer))]
   public class RandomAudioControls : UnityEditor.Editor

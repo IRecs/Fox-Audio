@@ -48,11 +48,11 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			if(!_audioCase.TryGetAudioCase(key, out IAudioCase audioCase))
 				return false;
 
-			if(TryPlay<PlayListAudioCase, PlaylistData, PlaylistPLayer>(audioCase, out iAudio))
+			if(TryPlay<PlayListAudioCase, PlaylistDataCase, PlaylistPLayer>(audioCase, out iAudio))
 				return true;
 			if(TryPlay<SoloAudioCase, SoloAudioClipData, SoloAudioPlayer>(audioCase, out iAudio))
 				return true;
-			if(TryPlay<RandomAudioCase, RandomAudioData, RandomAudioPlayer>(audioCase, out iAudio))
+			if(TryPlay<RandomAudioCase, RandomAudioDataCase, RandomAudioPlayer>(audioCase, out iAudio))
 				return true;
 
 			return false;

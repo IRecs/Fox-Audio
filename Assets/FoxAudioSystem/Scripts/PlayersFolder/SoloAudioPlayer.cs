@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using FoxAudioSystem.Scripts.CoreFolder;
 using FoxAudioSystem.Scripts.DataFolder;
 using FoxAudioSystem.Scripts.ExtensionFolder;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FoxAudioSystem.Scripts.PlayersFolder
 {
@@ -43,7 +45,7 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
 
     private IEnumerator WaitEndAudio()
     {
-      yield return new WaitForSecondsRealtime(Data.clip.length);
+      yield return new WaitForSecondsRealtime(Data.clip.length + 1000);
       Stop();
     }
 
@@ -54,8 +56,15 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
       else
       {
         AudioSource.Stop();
+        Debug.Log(Time.time);
+        Debug.Log("d " +Data.clip.length);
         OnStop();
       }
+    }
+
+    private void OnEnable()
+    {
+      Debug.Log(Time.time);
     }
 
     public void Pause() =>

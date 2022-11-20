@@ -3,7 +3,7 @@ using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace FoxAudioSystem.Editor.AudioControls
+namespace FoxAudioSystem.EditorFolder.AudioControls
 {
 	[CustomEditor(typeof(SoloAudioPlayer))]
 	public class AudioControls : UnityEditor.Editor

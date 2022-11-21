@@ -45,7 +45,7 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
 
     private IEnumerator WaitEndAudio()
     {
-      yield return new WaitForSecondsRealtime(Data.clip.length + 1000);
+      yield return new WaitForSecondsRealtime(Data.clip.length);
       Stop();
     }
 
@@ -56,15 +56,8 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
       else
       {
         AudioSource.Stop();
-        Debug.Log(Time.time);
-        Debug.Log("d " +Data.clip.length);
         OnStop();
       }
-    }
-
-    private void OnEnable()
-    {
-      Debug.Log(Time.time);
     }
 
     public void Pause() =>

@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FoxAudioSystem.Scripts.DataFolder;
 using FoxAudioSystem.Scripts.PlayersFolder;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace FoxAudioSystem.Scripts.ManagerFolder
 {
-	[CreateAssetMenu(menuName = "Create MainAudioCase", fileName = "MainAudioCase", order = 0)]
-	public class MainAudioCase : ScriptableObject
+	[CreateAssetMenu(menuName = "FoxAudioSystem/MainAudioCase", fileName = "MainAudioCase", order = 0)]
+	public class MainAudioCase : SubCaseAudioGroup
 	{
-		[BoxGroup("Main Group"), SerializeField]
-		private List<SoloAudioCase> _soloAudio;
-		[BoxGroup("Main Group"), SerializeField]
-		private List<PlayListAudioCase> _playListAudio;
-		[BoxGroup("Main Group"), SerializeField]
-		private List<RandomAudioCase> _randomAudio;
-
 		[Label("Cases")]
 		[BoxGroup("Subgroup"), SerializeField] private List<SubCaseAudioGroup> _subCaseAudioGroups;
 
@@ -47,17 +38,10 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 		{
 			Dictionary<string, IAudioCase> cases = new Dictionary<string, IAudioCase>();
 
-			foreach(SoloAudioCase soloAudio in _soloAudio.Where(s => !s.IsNull))
-				cases.Add(soloAudio.Key, soloAudio);
-
-			foreach(PlayListAudioCase playListAudio in _playListAudio.Where(p => !p.IsNull))
-				cases.Add(playListAudio.Key, playListAudio);
-
-			foreach(RandomAudioCase randomAudio in _randomAudio.Where(r => !r.IsNull))
-				cases.Add(randomAudio.Key, randomAudio);
-
+			InitializationCases(ref _cases);
+			
 			foreach(SubCaseAudioGroup subCaseAudioGroup in _subCaseAudioGroups)
-				subCaseAudioGroup.Initialization(ref cases);
+				subCaseAudioGroup.InitializationCases(ref cases);
 
 			return cases;
 		}
@@ -66,7 +50,6 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 		private void GenerateKeys()
 		{
 			Dictionary<string, IAudioCase> cases = GetCase();
-
 			List<string> names = new List<string>(cases.Count);
 
 			foreach(KeyValuePair<string, IAudioCase> t in cases)
@@ -93,22 +76,6 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 
 			audio = _prefabs[type];
 			return true;
-		}
-
-		private void OnValidate()
-		{
-			foreach(SoloAudioCase soloAudio in _soloAudio)
-				soloAudio.Name = soloAudio.Key;
-
-			foreach(PlayListAudioCase playListAudio in _playListAudio)
-				playListAudio.Name = playListAudio.Key;
-
-			foreach(RandomAudioCase randomAudio in _randomAudio)
-				randomAudio.Name = randomAudio.Key;
-
-			_soloAudio = _soloAudio.OrderBy(p => p.Name).ToList();
-			_playListAudio = _playListAudio.OrderBy(p => p.Name).ToList();
-			_randomAudio = _randomAudio.OrderBy(p => p.Name).ToList();
 		}
 	}
 

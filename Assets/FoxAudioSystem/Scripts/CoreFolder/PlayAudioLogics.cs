@@ -67,9 +67,11 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 
 			if(!(audioCase is TAudioCase tAudioCase))
 				return false;
-
+			
+#pragma warning disable 
 			TAudioBase audio = new TAudioBase();
-
+#pragma warning restore
+			
 			if(!_audioObject.Get(ref audio))
 			{
 				_audioGenerator.Generate(ref audio);

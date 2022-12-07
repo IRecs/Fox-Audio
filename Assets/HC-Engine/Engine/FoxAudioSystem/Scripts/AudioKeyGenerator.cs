@@ -2,39 +2,40 @@
 using System.Text;
 using UnityEngine;
 
-namespace FoxAudioSystem
+namespace FoxAudioSystem.Scripts
 {
 	public static class AudioKeyGenerator
 	{
-		public const string PathAudioKey = "Assets\\FoxAudioSystem\\Scripts\\CoreFolder\\AudioKey.cs";
-
 		private static string GetPath()
 		{
-			FileInfo fileInfo = new FileInfo(PathAudioKey);
-			return fileInfo.Directory.FullName + "\\AudioKey.cs";
+			FileInfo fileInfo = new FileInfo(Constants.AudioKeyGenerator.PathAudioKey);
+			if(fileInfo.Directory == null)
+				throw new FileNotFoundException(Constants.AudioKeyGenerator.FileNotFoundException);
+
+			return fileInfo.Directory.FullName + Constants.AudioKeyGenerator.AudioKeyCS ;
 		}
 
 		public static void Generate(string[] names)
 		{
 			StringBuilder stringBuilder = new StringBuilder();
 
-			stringBuilder.Add("namespace FoxAudioSystem.Editor");
-			stringBuilder.Add("{");
-			stringBuilder.Add("  public static class AudioKey");
-			stringBuilder.Add("  {");
+			stringBuilder.Add(Constants.AudioKeyGenerator.Namespace);
+			stringBuilder.Add(Constants.AudioKeyGenerator.OpenBracket);
+			stringBuilder.Add(Constants.AudioKeyGenerator.ClassName, 2);
+			stringBuilder.Add(Constants.AudioKeyGenerator.OpenBracket, 2);
 
 			foreach(string name in names)
 			{
-				if(name.IndexOf(' ') > -1)
+				if(name.IndexOf(Constants.AudioKeyGenerator.Spaces) > -1)
 				{
-					Debug.LogError($" Spaces in the name are not allowed. {name}");
+					Debug.LogError(Constants.AudioKeyGenerator.SpacesError + $"{name}");
 					continue;
 				}
 
-				stringBuilder.Add($"    public const string {name} = nameof({name});");
+				stringBuilder.Add(Constants.AudioKeyGenerator.StringField + $"{name} = nameof({name});", 4);
 			}
-			stringBuilder.Add("  }");
-			stringBuilder.Add("}");
+			stringBuilder.Add(Constants.AudioKeyGenerator.CloseBracket, 2);
+			stringBuilder.Add(Constants.AudioKeyGenerator.CloseBracket);
 
 			string text = stringBuilder.ToString();
 			Write(text);
@@ -46,12 +47,12 @@ namespace FoxAudioSystem
 
 			using(FileStream fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.Read))
 			{
-				var bytes = Encoding.UTF8.GetBytes(message);
+				byte[] bytes = Encoding.UTF8.GetBytes(message);
 				fs.Write(bytes, 0, bytes.Length);
 			}
 		}
 
-		private static void Add(this StringBuilder stringBuilder, string text) =>
-			stringBuilder.Append(text + "\n");
+		private static void Add(this StringBuilder stringBuilder, string text, int offset = 0) =>
+			stringBuilder.Append(new string(' ', offset) + text + "\n");
 	}
 }

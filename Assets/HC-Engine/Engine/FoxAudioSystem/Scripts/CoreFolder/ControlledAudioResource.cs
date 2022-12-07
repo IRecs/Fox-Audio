@@ -1,12 +1,14 @@
-﻿namespace FoxAudioSystem.Scripts.CoreFolder
+﻿using FoxAudioSystem.Scripts.PlayersFolder;
+
+namespace FoxAudioSystem.Scripts.CoreFolder
 {
 	public class ControlledAudioResource
 	{
-		public readonly IAudio Audio;
-		public string Key => Audio.Name;
-		public string ID => Audio.ID;
+		public readonly IAudioPlayer audioPlayer;
+		public string Key => audioPlayer.Name;
+		public string ID => audioPlayer.ID;
 
-		public ControlledAudioResource(IAudio audio) =>
-			Audio = audio;
+		public ControlledAudioResource(IAudioPlayer audioPlayer) =>
+			this.audioPlayer = audioPlayer;
 	}
 }

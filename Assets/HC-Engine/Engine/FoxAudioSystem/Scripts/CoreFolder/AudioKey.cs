@@ -1,4 +1,4 @@
-namespace FoxAudioSystem.Editor
+namespace FoxAudioSystem.Scripts.CoreFolder
 {
   public static class AudioKey
   {

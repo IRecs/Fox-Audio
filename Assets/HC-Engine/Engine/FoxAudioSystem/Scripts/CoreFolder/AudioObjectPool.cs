@@ -7,34 +7,34 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 {
 	public class AudioObjectPool
 	{
-		private Dictionary<Type, List<IAudio>> _objects;
+		private Dictionary<Type, List<IAudioPlayer>> _objects;
 
 		public AudioObjectPool()
 		{
-			_objects = new Dictionary<Type, List<IAudio>>();
-			_objects.Add(typeof(SoloAudioPlayer), new List<IAudio>());
-			_objects.Add(typeof(PlaylistPLayer), new List<IAudio>());
-			_objects.Add(typeof(RandomAudioPlayer), new List<IAudio>());
+			_objects = new Dictionary<Type, List<IAudioPlayer>>();
+			_objects.Add(typeof(SoloAudioPlayer), new List<IAudioPlayer>());
+			_objects.Add(typeof(PlaylistPlayer), new List<IAudioPlayer>());
+			_objects.Add(typeof(RandomAudioPlayer), new List<IAudioPlayer>());
 		}
 
-		public bool Get<T>(ref T getobject) where T : IAudio
+		public bool Get<T>(ref T getobject) where T : IAudioPlayer
 		{
 			if(_objects[getobject.GetType()].Count <= 0)
 				return false;
 
-			IAudio audio = _objects[getobject.GetType()].First();
-			_objects[getobject.GetType()].Remove(audio);
+			IAudioPlayer audioPlayer = _objects[getobject.GetType()].First();
+			_objects[getobject.GetType()].Remove(audioPlayer);
 			
-			getobject = (T) audio;
+			getobject = (T) audioPlayer;
 			return true;
 		}
 
-		public void Add(Type type, IAudio audio)
+		public void Add(Type type, IAudioPlayer audioPlayer)
 		{
 			if(!_objects.ContainsKey(type))
 				throw new Exception("Is not IAudio");
 			
-			_objects[type].Add(audio);
+			_objects[type].Add(audioPlayer);
 		}
 	}
 }

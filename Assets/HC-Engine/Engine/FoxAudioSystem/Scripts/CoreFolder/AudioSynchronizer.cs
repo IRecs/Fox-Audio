@@ -9,17 +9,17 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 		public string MainKey;
 		private readonly int _maxSound;
 
-		private List<SoloAudioPlayer > _audios;
-		private SoloAudioPlayer  _mainAudio;
+		private readonly List<IAudioPlayer> _audios;
+		private IAudioPlayer  _mainAudio;
 
 		public AudioSynchronizer(string mainKey, int maxSound)
 		{
 			MainKey = mainKey;
 			_maxSound = maxSound;
-			_audios = new List<SoloAudioPlayer >();
+			_audios = new List<IAudioPlayer>();
 		}
 
-		public void AddAudio(SoloAudioPlayer  audio)
+		public void AddAudio(IAudioPlayer  audio)
 		{
 			if(_audios.Contains(audio))
 				return;
@@ -27,7 +27,6 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			if(_audios.Count == 0)
 				_mainAudio = audio;
 			audio.End += AudioOnEnd;
-			audio.Synchronize(_mainAudio.TimeSamples);
 			_audios.Add(audio);
 			SynchronizeVolume();
 		}
@@ -42,17 +41,17 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			for( int i = 0; i < _audios.Count; i++ )
 			{
 				if(i < _maxSound)
-					_audios[i].SynchronizeVolume(volume);
+					_audios[i].SynchronizeLogic.Synchronize(_mainAudio.GetData(), _mainAudio.SynchronizeLogic.TimeSamples, volume);
 				else
-					_audios[i].SynchronizeVolume(0);
+					_audios[i].SynchronizeLogic.Synchronize(_mainAudio.GetData(), _mainAudio.SynchronizeLogic.TimeSamples, 0);
 			}
 		}
 
-		private void AudioOnEnd(IAudio audio)
+		private void AudioOnEnd(IAudioPlayer audioPlayer)
 		{
-			_audios.Remove((SoloAudioPlayer)audio);
+			_audios.Remove((SoloAudioPlayer)audioPlayer);
 
-			if(_mainAudio.Equals(audio) && _audios.Count > 0)
+			if(_mainAudio.Equals(audioPlayer) && _audios.Count > 0)
 				_mainAudio = _audios[0];
 
 			SynchronizeVolume();
@@ -63,7 +62,7 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 	{
 		private static Dictionary<string, AudioSynchronizer> _synchronizers = new Dictionary<string, AudioSynchronizer>();
 
-		public static void Add(SoloAudioPlayer  audio)
+		public static void Add(IAudioPlayer audio)
 		{
 			if(!_synchronizers.ContainsKey(audio.Name))
 				_synchronizers.Add(audio.Name, new AudioSynchronizer(audio.Name, 3));

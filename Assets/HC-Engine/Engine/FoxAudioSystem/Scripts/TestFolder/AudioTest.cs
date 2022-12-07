@@ -1,5 +1,4 @@
-﻿using FoxAudioSystem.Editor;
-using FoxAudioSystem.Scripts.CoreFolder;
+﻿using FoxAudioSystem.Scripts.CoreFolder;
 using UnityEngine;
 
 namespace FoxAudioSystem.Scripts.TestFolder

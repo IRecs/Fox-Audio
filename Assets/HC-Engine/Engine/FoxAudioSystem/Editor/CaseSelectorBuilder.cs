@@ -1,4 +1,5 @@
 ﻿using System;
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.DataFolder;
 using FoxAudioSystem.Scripts.ManagerFolder;
 using UnityEditor;
@@ -19,14 +20,14 @@ namespace FoxAudioSystem.EditorFolder
 		}
 
 		private void ShowHelpString() =>
-			helpString = "Choose which group you want to add\n";
+			helpString = Constants.CaseSelectorBuilder.HelpString;
 
 		private void CheckError()
 		{
 			string error = "";
 
 			if(Case == null)
-				error += "Case is null!\n";
+				error +=  Constants.CaseSelectorBuilder.CaseIsNull;
 
 			errorString = error;
 			isValid = errorString.Length == 0;
@@ -41,18 +42,18 @@ namespace FoxAudioSystem.EditorFolder
 	public class SubCaseSelectorBuilder : CaseSelectorBuilder<SubCaseAudioGroup>
 	{
 		public static SubCaseSelectorBuilder CreateWizard() =>
-			DisplayWizard<SubCaseSelectorBuilder>("Create Audio");
+			DisplayWizard<SubCaseSelectorBuilder>(Constants.CaseSelectorBuilder.ButtonName);
 	}
 	
 	public class RandomAudioDataCaseSelectorBuilder : CaseSelectorBuilder<RandomAudioDataCase>
 	{
 		public static RandomAudioDataCaseSelectorBuilder CreateWizard() =>
-			DisplayWizard<RandomAudioDataCaseSelectorBuilder>("Create Audio");
+			DisplayWizard<RandomAudioDataCaseSelectorBuilder>(Constants.CaseSelectorBuilder.ButtonName);
 	}
 	
 	public class PlaylistDataCaseSelectorBuilder : CaseSelectorBuilder<PlaylistDataCase>
 	{
 		public static PlaylistDataCaseSelectorBuilder  CreateWizard() =>
-			DisplayWizard<PlaylistDataCaseSelectorBuilder >("Create Audio");
+			DisplayWizard<PlaylistDataCaseSelectorBuilder >(Constants.CaseSelectorBuilder.ButtonName);
 	}
 }

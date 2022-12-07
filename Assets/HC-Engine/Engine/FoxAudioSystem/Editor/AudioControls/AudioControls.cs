@@ -1,3 +1,4 @@
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.ExtensionFolder;
 using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
@@ -15,7 +16,7 @@ namespace FoxAudioSystem.EditorFolder.AudioControls
 		{
 			rootElement = new VisualElement();
 
-			var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(AudioPaths.EditorPath + "/AudioControls/AudioControls.uss");
+			var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(Constants.AudioPaths.EditorPath + "/AudioControls/AudioControls.uss");
 			rootElement.styleSheets.Add(styleSheet);
 		}
 
@@ -34,7 +35,7 @@ namespace FoxAudioSystem.EditorFolder.AudioControls
 			});
 			rootElement.Add(container);
 
-			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(AudioPaths.EditorPath + "/AudioControls/AudioControls.uxml");
+			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Constants.AudioPaths.EditorPath + "/AudioControls/AudioControls.uxml");
 			visualTree.CloneTree(rootElement);
 
 			SoloAudioPlayer soloAudioPlayerTarget = (SoloAudioPlayer) target;

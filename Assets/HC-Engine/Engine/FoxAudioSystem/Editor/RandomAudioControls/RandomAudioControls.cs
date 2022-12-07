@@ -1,3 +1,4 @@
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -14,7 +15,7 @@ namespace FoxAudioSystem.EditorFolder.RandomAudioControls
     {
       rootElement = new VisualElement();
 
-      var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(AudioPaths.EditorPath +"/RandomAudioControls/RandomAudioControls.uss");
+      var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(Constants.AudioPaths.EditorPath +"/RandomAudioControls/RandomAudioControls.uss");
       rootElement.styleSheets.Add(styleSheet);
     }
 
@@ -33,7 +34,7 @@ namespace FoxAudioSystem.EditorFolder.RandomAudioControls
       });
       rootElement.Add(container);
 
-      var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(AudioPaths.EditorPath +"/RandomAudioControls/RandomAudioControls.uxml");
+      var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Constants.AudioPaths.EditorPath +"/RandomAudioControls/RandomAudioControls.uxml");
       visualTree.CloneTree(rootElement);
 
       RandomAudioPlayer randomAudioPlayerTarget = (RandomAudioPlayer)target;

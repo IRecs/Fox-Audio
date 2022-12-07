@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.ManagerFolder;
 using UnityEditor;
-using UnityEngine;
 
 #pragma warning disable
 namespace FoxAudioSystem.EditorFolder
@@ -17,35 +17,25 @@ namespace FoxAudioSystem.EditorFolder
 
 		private string[] _names;
 
-		private static void SetNames(AudionNameBuilder builder, string type, string subType)
-		{
-			string[] assets = AssetDatabase.FindAssets($"t:{type} t:{subType}");
-			List<string> names = new List<string>(assets.Length);
-			foreach(string guid in assets)
-			{
-				string path = AssetDatabase.GUIDToAssetPath(guid);
-				int lastPoint = 0;
-				for( int i = 0; i < path.Length; i++ )
-				{
-					if(path[i] == '/')
-						lastPoint = i;
-				}
-				path = path.Remove(0, lastPoint + 1);
-				path = path.Remove(path.Length - 6);
-				Debug.Log(path);
-				names.Add(path);
-			}
-			builder._names = names.ToArray();
-		}
-
 		public static void CreateAudionNameBuilder(AudioCaseToll audioCaseToll, string type, string subType = "")
 		{
 			if(audioCaseToll.Colbeck == null)
 				return;
 
-			AudionNameBuilder builder = DisplayWizard<AudionNameBuilder>("Create Audion");
+			AudionNameBuilder builder = DisplayWizard<AudionNameBuilder>( Constants.AudionNameBuilder.ButtonName);
 			SetNames(builder, type, subType);
 			Initialization(audioCaseToll, builder);
+		}
+
+		public void OnWizardCreate() =>
+			_audioCaseToll.Colbeck?.Invoke(NewName, Case);
+		
+		private static void SetNames(AudionNameBuilder builder, string type, string subType)
+		{
+			string[] assets = AssetDatabase.FindAssets($"t:{type} t:{subType}");
+			List<string> names = new List<string>(assets.Length);
+			names.AddRange(assets.Select(AssetDatabase.GUIDToAssetPath).Select(Path.GetFileNameWithoutExtension));
+			builder._names = names.ToArray();
 		}
 
 		private static void Initialization(AudioCaseToll audioCaseToll, AudionNameBuilder builder)
@@ -53,59 +43,38 @@ namespace FoxAudioSystem.EditorFolder
 			builder._audioCaseToll = audioCaseToll;
 			builder.NewName = audioCaseToll.Name;
 
-			string[] guids = AssetDatabase.FindAssets("t:MainAudioCase");
+			string[] guids = AssetDatabase.FindAssets(Constants.AudionNameBuilder.MainAudioCaseTypeToAssets);
 			string path = AssetDatabase.GUIDToAssetPath(guids[0]);
 
-			builder.Case = (MainAudioCase)AssetDatabase.LoadAssetAtPath(path, typeof(MainAudioCase));
+			builder.Case = (MainAudioCase) AssetDatabase.LoadAssetAtPath(path, typeof(MainAudioCase));
 			builder.OnWizardUpdate();
 		}
 
 		public void OnWizardUpdate()
 		{
-			TryChangeName();
+			NewName = NameValidator.TryChangeName(NewName);
 			ShowHelpString();
 			CheckError();
 		}
 
-		private void TryChangeName()
-		{
-			NewName = NeedChangeName(NewName);
-		}
-
-		private static string NeedChangeName(string name)
-		{
-			if(string.IsNullOrEmpty(name))
-				return "New";
-
-			if(!Regex.Match(name, "^[A-Z][a-zA-Z][_]*$").Success)
-				name = Regex.Replace(name, @"[^0-9a-zA-Z_]+", "");
-
-			return name;
-		}
-
-		private void ShowHelpString()
-		{
-			helpString = "Enter the desired name for the new resource."
-			             + "The name is automatically adjusted to the required format\n";
-		}
+		private void ShowHelpString() =>
+			helpString = Constants.AudionNameBuilder.HelpString;
 
 		private void CheckError()
 		{
 			string error = "";
 
 			if(_audioCaseToll.Colbeck == null)
-				error += "AudioCaseToll is null!\n";
+				error += Constants.AudionNameBuilder.AudioCaseTollIsNull;
 			else if(string.IsNullOrEmpty(_audioCaseToll.Name))
-				error += "Name is nul!l\n";
+				error += Constants.AudionNameBuilder.NameIsNulL;
 			else if(_names.Contains(NewName))
-				error += "Name taken, please select another!\n";
+				error += Constants.AudionNameBuilder.NameTakenPleaseSelectAnother;
 
 			errorString = error;
 			isValid = errorString.Length == 0;
 		}
 
-		public void OnWizardCreate() =>
-			_audioCaseToll.Colbeck?.Invoke(NewName, Case);
 	}
 
 }

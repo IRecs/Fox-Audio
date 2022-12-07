@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Engine.DI;
 using FoxAudioSystem.Scripts.ManagerFolder;
+using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEngine;
 
 namespace FoxAudioSystem.Scripts.CoreFolder
@@ -44,18 +45,18 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 				_controlledAudio.Add(controlledAudioResource.Key, new List<ControlledAudioResource>(1));
 
 			_controlledAudio[controlledAudioResource.Key].Add(controlledAudioResource);
-			controlledAudioResource.Audio.End += AudioOnEnd;
+			controlledAudioResource.audioPlayer.End += AudioPlayerOnEnd;
 		}
 
-		private void AudioOnEnd(IAudio audio)
+		private void AudioPlayerOnEnd(IAudioPlayer audioPlayer)
 		{
-			ControlledAudioResource controlledAudioResource = _controlledAudio[audio.Name].Find(c => c.ID == audio.ID);
+			ControlledAudioResource controlledAudioResource = _controlledAudio[audioPlayer.Name].Find(c => c.ID == audioPlayer.ID);
 
 			if(controlledAudioResource == null)
 				return;
 
-			controlledAudioResource.Audio.End -= AudioOnEnd;
-			_controlledAudio[audio.Name].Remove(controlledAudioResource);
+			controlledAudioResource.audioPlayer.End -= AudioPlayerOnEnd;
+			_controlledAudio[audioPlayer.Name].Remove(controlledAudioResource);
 		}
 		
 		/// <summary>

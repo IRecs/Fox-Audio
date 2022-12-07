@@ -36,7 +36,7 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 		public bool PlayAudioFollowingTarget(string key, Transform target, out ControlledAudioResource controlledAudioResource)
 		{
 			bool result = _playAudioLogics.Play(key, target.position, out controlledAudioResource);
-			controlledAudioResource.Audio.SetTarget(target);
+			controlledAudioResource.audioPlayer.SetTarget(target);
 			return result;
 		}
 		
@@ -45,14 +45,14 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 			if(!_dataPool.TryGetControlledAudioResource(controlledAudioResource))
 				return false;
 
-			controlledAudioResource.Audio.Stop();
+			controlledAudioResource.audioPlayer.Stop();
 			return true;
 		}
 
 		public void StopAllAudio()
 		{
 			foreach(ControlledAudioResource resource in _dataPool.GetAll())
-				resource.Audio.Stop();
+				resource.audioPlayer.Stop();
 		}
 	}
 }

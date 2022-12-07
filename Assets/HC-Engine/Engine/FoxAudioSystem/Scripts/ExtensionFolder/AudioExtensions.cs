@@ -4,16 +4,14 @@ using UnityEngine;
 
 namespace FoxAudioSystem.Scripts.ExtensionFolder
 {
-  public static class AudioEx
+  public static class AudioExtensions
   {
     public static void GenerateAudioSource(this AudioData audioData, GameObject gameObject)
     {
       AudioSource source = gameObject.GetComponent<AudioSource>();
 
       if (source == null)
-      {
         source = gameObject.AddComponent<AudioSource>();
-      }
 
       source.tag = "Audio";
       source.clip = audioData.clip;
@@ -40,7 +38,6 @@ namespace FoxAudioSystem.Scripts.ExtensionFolder
         audioSource.volume = Mathf.Lerp(start, volume, currentTime / duration);
         yield return null;
       }
-      yield break;
     }
 
     public static IEnumerator FadeOut(this AudioSource audioSource, float duration)
@@ -56,7 +53,6 @@ namespace FoxAudioSystem.Scripts.ExtensionFolder
       }
       audioSource.Stop();
       audioSource.volume = volume;
-      yield break;
     }
   }
 }

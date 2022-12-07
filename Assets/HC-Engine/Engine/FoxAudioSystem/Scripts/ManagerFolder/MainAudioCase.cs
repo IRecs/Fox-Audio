@@ -15,11 +15,11 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 
 		[BoxGroup("Prefabs"), SerializeField] private bool _advancedSettings;
 		[BoxGroup("Prefabs"), SerializeField, ShowIf(nameof(_advancedSettings))]
-		private SoloAudioPlayer _soloAudioPlayerPrefab;
+		private SoloAudioPlayer SoloAudioPlayerPrefab;
 		[BoxGroup("Prefabs"), SerializeField, ShowIf(nameof(_advancedSettings))]
-		private PlaylistPLayer _playlistPLayerPrefab;
+		private PlaylistPlayer PlaylistPlayerPrefab;
 		[BoxGroup("Prefabs"), SerializeField, ShowIf(nameof(_advancedSettings))]
-		private RandomAudioPlayer _randomAudioPlayerPrefab;
+		private RandomAudioPlayer RandomAudioPlayerPrefab;
 
 		private Dictionary<string, IAudioCase> _cases;
 		private Dictionary<Type, GameObject> _prefabs;
@@ -29,9 +29,9 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 			_cases = GetCase();
 
 			_prefabs = new Dictionary<Type, GameObject>();
-			_prefabs.Add(_soloAudioPlayerPrefab.GetType(), _soloAudioPlayerPrefab.gameObject);
-			_prefabs.Add(_playlistPLayerPrefab.GetType(), _playlistPLayerPrefab.gameObject);
-			_prefabs.Add(_randomAudioPlayerPrefab.GetType(), _randomAudioPlayerPrefab.gameObject);
+			_prefabs.Add(SoloAudioPlayerPrefab.GetType(), SoloAudioPlayerPrefab.gameObject);
+			_prefabs.Add(PlaylistPlayerPrefab.GetType(), PlaylistPlayerPrefab.gameObject);
+			_prefabs.Add(RandomAudioPlayerPrefab.GetType(), RandomAudioPlayerPrefab.gameObject);
 		}
 
 		private Dictionary<string, IAudioCase> GetCase()

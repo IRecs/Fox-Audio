@@ -13,23 +13,11 @@ MonoBehaviour:
   m_Name: MainAudioCase
   m_EditorClassIdentifier: 
   _soloAudio: []
-  _playListAudio:
-  - Name: Ter
-    AudioData: {fileID: 11400000, guid: 96694e0f22ac3354da1d5935a785fabe, type: 2}
-  - Name: New
-    AudioData: {fileID: 0}
-  - Name: Test
-    AudioData: {fileID: 11400000, guid: 96bbc858a00f38a4e941e142f265b5d7, type: 2}
-  - Name: New
-    AudioData: {fileID: 0}
-  - Name: New
-    AudioData: {fileID: 0}
-  - Name: New
-    AudioData: {fileID: 11400000, guid: e4a2ddfc63d271f488c5d4b942b5a67b, type: 2}
+  _playListAudio: []
   _randomAudio: []
   _subCaseAudioGroups:
   - {fileID: 11400000, guid: 582d8b9277e0d024a8327cee89b3c865, type: 2}
   _advancedSettings: 0
-  _soloAudioPlayerPrefab: {fileID: 5420872890265000807, guid: c69e4d6a98526184588918e24bfc8d01, type: 3}
-  _playlistPLayerPrefab: {fileID: 5353355670070630838, guid: 5274cbfa8dcc9ad428592c0f643ae97b, type: 3}
-  _randomAudioPlayerPrefab: {fileID: 9218017704323561043, guid: 75d2c29820ad0784db629f12a10b4226, type: 3}
+  SoloAudioPlayerPrefab: {fileID: 5420872890265000807, guid: c69e4d6a98526184588918e24bfc8d01, type: 3}
+  PlaylistPlayerPrefab: {fileID: 5353355670070630838, guid: 5274cbfa8dcc9ad428592c0f643ae97b, type: 3}
+  RandomAudioPlayerPrefab: {fileID: 9218017704323561043, guid: 75d2c29820ad0784db629f12a10b4226, type: 3}

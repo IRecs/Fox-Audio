@@ -8,12 +8,18 @@ using Random = UnityEngine.Random;
 namespace FoxAudioSystem.Scripts.PlayersFolder
 {
 	[AddComponentMenu("FoxAudioSystem/Audio/Random Audio")]
-	public class RandomAudioPlayer : AudioBase<RandomAudioDataCase>
+	public class RandomAudioPlayer : AudioPlayerBase<RandomAudioDataCase>
 	{
 		private int _lastIndex;
 		private bool _isPlaying = true;
 		private AudioData _currentAudioData;
 		private int _countPlay = 0;
+		private RandomSynchronizeLogic _synchronizeLogic;
+
+		public override ISynchronizeLogic SynchronizeLogic => _synchronizeLogic;
+
+		protected override void OnInitialization(RandomAudioDataCase data) =>
+			_synchronizeLogic = new RandomSynchronizeLogic(AudioSource);
 
 		public void PlayRandom()
 		{
@@ -65,6 +71,12 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
 			PlayRandom();
 		}
 
+		public override void Pause()
+		{
+			IsPause = true;
+			AudioSource.Pause();
+		}
+
 		public override void Stop()
 		{
 			_isPlaying = false;
@@ -82,6 +94,9 @@ namespace FoxAudioSystem.Scripts.PlayersFolder
 				OnStop();
 			}
 
+		}
+		protected override void Reset()
+		{
 		}
 	}
 }

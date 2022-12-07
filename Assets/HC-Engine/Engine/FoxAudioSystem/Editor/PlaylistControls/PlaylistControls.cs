@@ -1,10 +1,11 @@
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.PlayersFolder;
 using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace FoxAudioSystem.EditorFolder.PlaylistControls
 {
-	[CustomEditor(typeof(PlaylistPLayer))]
+	[CustomEditor(typeof(PlaylistPlayer))]
 	public class PlaylistControls : UnityEditor.Editor
 	{
 		private VisualElement rootElement;
@@ -14,7 +15,7 @@ namespace FoxAudioSystem.EditorFolder.PlaylistControls
 		{
 			rootElement = new VisualElement();
 
-			var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(AudioPaths.EditorPath + "/PlaylistControls/PlaylistControls.uss");
+			var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(Constants.AudioPaths.EditorPath + "/PlaylistControls/PlaylistControls.uss");
 			rootElement.styleSheets.Add(styleSheet);
 		}
 
@@ -33,41 +34,44 @@ namespace FoxAudioSystem.EditorFolder.PlaylistControls
 			});
 			rootElement.Add(container);
 
-			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(AudioPaths.EditorPath + "/PlaylistControls/PlaylistControls.uxml");
+			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Constants.AudioPaths.EditorPath + "/PlaylistControls/PlaylistControls.uxml");
 			visualTree.CloneTree(rootElement);
 
-			PlaylistPLayer playlistPLayerTarget = (PlaylistPLayer) target;
+			PlaylistPlayer playlistPlayerTarget = (PlaylistPlayer) target;
 
 			Button generateAudioSourceButton = rootElement.Q<Button>("generate-audio-source");
 			generateAudioSourceButton.clicked += () =>
 			{
-				playlistPLayerTarget.GenerateAudioSource();
+				playlistPlayerTarget.GenerateAudioSource();
 			};
 
 			Button previousButton = rootElement.Q<Button>("previous");
 			previousButton.clicked += () =>
 			{
-				playlistPLayerTarget.Previous();
+				playlistPlayerTarget.Previous();
 			};
 			Button stopButton = rootElement.Q<Button>("stop");
 			stopButton.clicked += () =>
 			{
-				playlistPLayerTarget.Stop();
+				playlistPlayerTarget.Stop();
 			};
 			Button playButton = rootElement.Q<Button>("play");
 			playButton.clicked += () =>
 			{
-				playlistPLayerTarget.Play();
+				playlistPlayerTarget.Play();
 			};
 			Button pauseButton = rootElement.Q<Button>("pause");
 			pauseButton.clicked += () =>
 			{
-				playlistPLayerTarget.TogglePause();
+				if(playlistPlayerTarget.CanPause)
+					playlistPlayerTarget.Pause();
+				else
+					playlistPlayerTarget.Play();
 			};
 			Button nextButton = rootElement.Q<Button>("next");
 			nextButton.clicked += () =>
 			{
-				playlistPLayerTarget.Next();
+				playlistPlayerTarget.Next();
 			};
 
 			return rootElement;

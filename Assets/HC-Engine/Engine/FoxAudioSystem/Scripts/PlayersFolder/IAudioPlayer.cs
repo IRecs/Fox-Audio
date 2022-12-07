@@ -1,28 +1,23 @@
 using System;
+using FoxAudioSystem.Scripts.DataFolder;
 using UnityEngine;
 
-namespace FoxAudioSystem.Scripts.CoreFolder
+namespace FoxAudioSystem.Scripts.PlayersFolder
 {
-	public interface IAudio
+	public interface IAudioPlayer
 	{
 		string Name { get; }
 		string ID { get; set; }
 		Type Type { get; set; }
-		public event Action<IAudio> End;
+		public event Action<IAudioPlayer> End;
 		void GenerateAudioSource();
 		void Play();
+		void Pause();
 		void Stop();
 		void SetPosition(Vector3 spawnPoint);
 		void SetTarget(Transform target);
 		GameObject GameObject { get; }
-
+		ISynchronizeLogic SynchronizeLogic { get; }
+		AudioData GetData();
 	}
-
-	public interface ISynchronizedSound
-	{
-		int TimeSamples { get; }
-		void Synchronize(int timeSamples);
-		void SynchronizeVolume(float volumeMultiplier);
-	}
-
 }

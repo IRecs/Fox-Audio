@@ -31,13 +31,13 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			if(!TryPlayAudio(key, out resource))
 				return false;
 
-			resource.Audio.SetPosition(spawnPosition);
-			resource.Audio.End += AudioOnEnd;
+			resource.audioPlayer.SetPosition(spawnPosition);
+			resource.audioPlayer.End += AudioPlayerOnEnd;
 
 			_dataPool.Add(resource);
 
-			resource.Audio.GameObject.SetActive(true);
-			resource.Audio.Play();
+			resource.audioPlayer.GameObject.SetActive(true);
+			resource.audioPlayer.Play();
 			return true;
 		}
 
@@ -48,7 +48,7 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			if(!_audioCase.TryGetAudioCase(key, out IAudioCase audioCase))
 				return false;
 
-			if(TryPlay<PlayListAudioCase, PlaylistDataCase, PlaylistPLayer>(audioCase, out iAudio))
+			if(TryPlay<PlayListAudioCase, PlaylistDataCase, PlaylistPlayer>(audioCase, out iAudio))
 				return true;
 			if(TryPlay<SoloAudioCase, SoloAudioClipData, SoloAudioPlayer>(audioCase, out iAudio))
 				return true;
@@ -61,7 +61,7 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 		private bool TryPlay<TAudioCase, TAudioDataBase, TAudioBase>(IAudioCase audioCase, out ControlledAudioResource iAudio)
 			where TAudioDataBase : AudioDataBase
 			where TAudioCase : AudioCase<TAudioDataBase>
-			where TAudioBase : AudioBase<TAudioDataBase>, new()
+			where TAudioBase : AudioPlayerBase<TAudioDataBase>, new()
 		{
 			iAudio = null;
 
@@ -76,8 +76,8 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			{
 				_audioGenerator.Generate(ref audio);
 
-				if(audio is IAudio setIDAudio)
-					setIDAudio.ID = $"{typeof(IAudio)}_{Time.time}_{Guid.NewGuid()}";
+				if(audio is IAudioPlayer setIDAudio)
+					setIDAudio.ID = $"{typeof(IAudioPlayer)}_{Time.time}_{Guid.NewGuid()}";
 
 				audio.GameObject.transform.SetParent(_transform);
 			}
@@ -89,16 +89,16 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 			return true;
 		}
 
-		private void AudioOnEnd(IAudio audio)
+		private void AudioPlayerOnEnd(IAudioPlayer audioPlayer)
 		{
-			audio.End -= AudioOnEnd;
-			_dataPool.Get(audio);
+			audioPlayer.End -= AudioPlayerOnEnd;
+			_dataPool.Get(audioPlayer);
 
-			if(audio.GameObject == null)
+			if(audioPlayer.GameObject == null)
 				return;
 
-			audio.GameObject.SetActive(false);
-			_audioObject.Add(audio.Type, audio);
+			audioPlayer.GameObject.SetActive(false);
+			_audioObject.Add(audioPlayer.Type, audioPlayer);
 		}
 	}
 }

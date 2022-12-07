@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FoxAudioSystem.Scripts.CoreFolder;
+using FoxAudioSystem.Scripts.PlayersFolder;
 
 namespace FoxAudioSystem.Scripts.ManagerFolder
 {
@@ -57,7 +58,7 @@ namespace FoxAudioSystem.Scripts.ManagerFolder
 			return controlled;
 		}
 
-		public bool Get(IAudio audio) =>
-			TryGetControlledAudioResource(audio.Name, audio.ID, out ControlledAudioResource resource);
+		public bool Get(IAudioPlayer audioPlayer) =>
+			TryGetControlledAudioResource(audioPlayer.Name, audioPlayer.ID, out ControlledAudioResource resource);
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using FoxAudioSystem.Scripts;
 using FoxAudioSystem.Scripts.DataFolder;
 using FoxAudioSystem.Scripts.ManagerFolder;
 using UnityEditor;
@@ -34,21 +35,13 @@ namespace FoxAudioSystem.EditorFolder
 		[MenuItem(RandomAudioClipDataToCase, true)]
 		public static bool ValidateAudioClip() =>
 			Check<AudioClip>();
-
-		[MenuItem(RandomAudioDataCase, true)]
-		public static bool ValidateRandomClipData() =>
-			Check<RandomAudioClipData>();
-
-		[MenuItem(PlaylistAudioClipCase, true)]
-		public static bool ValidatePlaylistClipData() =>
-			Check<PlaylistAudioClipData>();
 		#endregion
 
 		#region Solo
 		[MenuItem(SoloAudioClipData, false, 0)]
 		public static bool CreateSoloAudioClipData()
 		{
-			TryStart<SoloAudioClipData>(AudioPaths.SoloAudioClipData);
+			TryStart<SoloAudioClipData>(Constants.AudioPaths.SoloAudioClipData);
 			return true;
 		}
 		[MenuItem(SoloAudioClipDataToCase, false, 0)]
@@ -59,7 +52,7 @@ namespace FoxAudioSystem.EditorFolder
 		#region Playlist
 		[MenuItem(PlaylistAudioClipData, false, 20)]
 		public static void CreatePlaylistAudioClipData() =>
-			TryStart<PlaylistAudioClipData>(AudioPaths.PlaylistData);
+			TryStart<PlaylistAudioClipData>(Constants.AudioPaths.PlaylistData);
 
 		[MenuItem(PlaylistAudioClipDataToCase, false, 20)]
 		public static void CreatePlaylistAudioClipDataToCase() =>
@@ -71,15 +64,15 @@ namespace FoxAudioSystem.EditorFolder
 
 		private static void CreatePlaylistAudioClipCase(bool select)
 		{
-			Action<List<PlaylistAudioClipData>, PlaylistDataCase> callback = (list, dataCase) => dataCase.audioList = list;
-			CaseCreator.CreateCase(AudioPaths.PlaylistData, callback, select);
+			Action<List<PlaylistAudioClipData>, PlaylistDataCase> callback = (list, dataCase) => dataCase.SetAudioList(list);
+			CaseCreator.CreateCase(Constants.AudioPaths.PlaylistData, callback, select);
 		}
 		#endregion
 
 		#region Random
 		[MenuItem(RandomAudioClipData, false, 40)]
 		public static void CreateRandomAudioCliData() =>
-			TryStart<RandomAudioClipData>(AudioPaths.RandomAudioData);
+			TryStart<RandomAudioClipData>(Constants.AudioPaths.RandomAudioData);
 
 		[MenuItem(RandomAudioClipDataToCase, false, 40)]
 		public static void CreateRandomAudioCliDataToCase() =>
@@ -92,7 +85,7 @@ namespace FoxAudioSystem.EditorFolder
 		private static void CreateRandomAudioDataCase(bool select)
 		{
 			Action<List<RandomAudioClipData>, RandomAudioDataCase> callback = (list, dataCase) => dataCase.audioList = list;
-			CaseCreator.CreateCase(AudioPaths.RandomAudioData, callback, select);
+			CaseCreator.CreateCase(Constants.AudioPaths.RandomAudioData, callback, select);
 		}
 		#endregion
 

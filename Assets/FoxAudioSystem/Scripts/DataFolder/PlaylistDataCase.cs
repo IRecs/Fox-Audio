@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FoxAudioSystem.Scripts.DataFolder
 {
-	[CreateAssetMenu(fileName = "New Playlist Data", menuName = "FoxAudioSystem/Audio/Data/Playlist/Playlist Case")]
+	[CreateAssetMenu(fileName = Constants.CreateAssetMenuNames.PlaylistDataCase, menuName =  Constants.CreateAssetMenuPaths.PlaylistDataCase)]
 	public class PlaylistDataCase : AudioDataBase, ICase
 	{
 		[field: SerializeField] public List<PlaylistAudioClipData> AudioList{ get; private set; }

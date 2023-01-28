@@ -12,7 +12,21 @@
 			public const string HelpString = "Enter the desired name for the new resource."
 			                                 + "The name is automatically adjusted to the required format\n";
 		}
+		
+		public static class CreateAssetMenuPaths
+		{
+			public const string PlaylistDataCase  = "FoxAudioSystem/Audio/Data/Playlist/Playlist Case";
+			public const string CaseIsNull = "Case is null!\n";
+			public const string HelpString = "Choose which group you want to add\n";
+		}
 
+		public static class CreateAssetMenuNames
+		{
+			public const string PlaylistDataCase  = "new PlaylistDataCase ";
+			public const string CaseIsNull = "Case is null!\n";
+			public const string HelpString = "Choose which group you want to add\n";
+		}
+		
 		public static class CaseSelectorBuilder
 		{
 			public const string ButtonName = "Create Audion";
@@ -31,8 +45,8 @@
 
 		public static class AudioPaths
 		{
-			public const string EditorPath = "Assets/HC-Engine/Engine/FoxAudioSystem/Editor";
-			public const string DataPath = "Assets/HC-Engine/Engine/FoxAudioSystem/Data";
+			public const string EditorPath = "Assets/FoxAudioSystem/Editor";
+			public const string DataPath = "Assets/FoxAudioSystem/Data";
 			public const string PlaylistData = DataPath + "/PlaylistData";
 			public const string SoloAudioClipData = DataPath + "/SoloAudioClipData";
 			public const string RandomAudioData = DataPath + "/RandomAudioData";

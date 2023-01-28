@@ -6,15 +6,13 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 {
 	public class AudioSynchronizer
 	{
-		public string MainKey;
 		private readonly int _maxSound;
 
 		private readonly List<IAudioPlayer> _audios;
 		private IAudioPlayer  _mainAudio;
 
-		public AudioSynchronizer(string mainKey, int maxSound)
+		public AudioSynchronizer(int maxSound)
 		{
-			MainKey = mainKey;
 			_maxSound = maxSound;
 			_audios = new List<IAudioPlayer>();
 		}
@@ -62,10 +60,10 @@ namespace FoxAudioSystem.Scripts.CoreFolder
 	{
 		private static Dictionary<string, AudioSynchronizer> _synchronizers = new Dictionary<string, AudioSynchronizer>();
 
-		public static void Add(IAudioPlayer audio)
+		public static void Add(IAudioPlayer audio, int maxSound = 3)
 		{
 			if(!_synchronizers.ContainsKey(audio.Name))
-				_synchronizers.Add(audio.Name, new AudioSynchronizer(audio.Name, 3));
+				_synchronizers.Add(audio.Name, new AudioSynchronizer(maxSound));
 			
 			_synchronizers[audio.Name].AddAudio(audio);
 		}
